@@ -11,7 +11,7 @@
 
       </q-toolbar>
     </q-header>
-
+    https://www.npmjs.com/package/vue-grid-layout3
     <q-page-container>
       <router-view />
     </q-page-container>

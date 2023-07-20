@@ -11,17 +11,27 @@
     "build": "quasar build"
   },
   "dependencies": {
-    "axios": "^1.2.1",
-    "pinia": "^2.0.11",
     "@quasar/extras": "^1.0.0",
+    "axios": "^1.2.1",
     "core-js": "^3.6.5",
+    "pinia": "^2.0.11",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
+    "vue-grid-layout3": "^2.8.0",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
+    "@quasar/app-webpack": "^3.0.0",
     "@types/node": "^12.20.21",
-    "@quasar/app-webpack": "^3.0.0"
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^3.0.0"
   },
   "browserslist": [
     "last 10 Chrome versions",
