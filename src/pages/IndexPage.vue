@@ -4,16 +4,16 @@ import 'vue-grid-layout3/dist/style.css'
 import { ref } from "vue";
 
 const layout = ref([
-  { x: 0, y: 0, w: 2, h: 2, i: 0, moved: true },
-  { x: 2, y: 0, w: 2, h: 4, i: 1, moved: true },
-  { x: 4, y: 0, w: 2, h: 5, i: 2, moved: true },
-  { x: 6, y: 0, w: 2, h: 3, i: 3, moved: true },
-  { x: 8, y: 0, w: 2, h: 3, i: 4, moved: true },
-  { x: 8, y: 0, w: 2, h: 3, i: 5, moved: true },
-  { x: 0, y: 5, w: 2, h: 5, i: 6, moved: true },
-  { x: 2, y: 5, w: 2, h: 5, i: 7, moved: true },
-  { x: 4, y: 5, w: 2, h: 5, i: 8, moved: true },
-  { x: 6, y: 3, w: 2, h: 4, i: 9, moved: true }
+  { x: 0, y: 0, w: 2, h: 2, i: 0 },
+  { x: 2, y: 0, w: 2, h: 4, i: 1 },
+  { x: 4, y: 0, w: 2, h: 5, i: 2 },
+  { x: 6, y: 0, w: 2, h: 3, i: 3 },
+  { x: 8, y: 0, w: 2, h: 3, i: 4 },
+  { x: 8, y: 0, w: 2, h: 3, i: 5 },
+  { x: 0, y: 5, w: 2, h: 5, i: 6 },
+  { x: 2, y: 5, w: 2, h: 5, i: 7 },
+  { x: 4, y: 5, w: 2, h: 5, i: 8 },
+  { x: 6, y: 3, w: 2, h: 4, i: 9 }
 ])
 
 const resize = (value) => { console.log(value) }
@@ -30,19 +30,6 @@ const moved = (value) => { console.log(value) }
       class="grid-generator"
     >
       <template #default="{ gridItemProps }">
-        <!-- | gridItemProps props from GridLayout | -->
-        <!--breakpointCols: props.cols-->
-        <!--colNum: props.colNum-->
-        <!--containerWidth: width.value-->
-        <!--isDraggable: props.isDraggable-->
-        <!--isResizable: props.isResizable-->
-        <!--lastBreakpoint: lastBreakpoint.value-->
-        <!--margin: props.margin-->
-        <!--maxRows: props.maxRows-->
-        <!--responsive: props.responsive-->
-        <!--rowHeight: props.rowHeight-->
-        <!--useCssTransforms: props.useCssTransforms-->
-        <!--width: width.value-->
         <grid-item
           v-for="item in layout"
           :key="item.i"
@@ -56,7 +43,7 @@ const moved = (value) => { console.log(value) }
           @move="move"
           @moved="moved"
         >
-          {{ item.i }}
+          {{ item.i }}1
         </grid-item>
       </template>
     </grid-layout>
