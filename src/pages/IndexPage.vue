@@ -16,9 +16,17 @@ const layout = ref([
   { x: 6, y: 3, w: 2, h: 4, i: 9 }
 ])
 
-const resize = (value) => { console.log(value) }
-const move = (value) => { console.log(value) }
-const moved = (value) => { console.log(value) }
+const layoutInner = ref([
+  { x: 0, y: 0, w: 2, h: 2, i: 0 },
+  { x: 2, y: 0, w: 2, h: 4, i: 1 },
+])
+
+const resize = (...value) => { console.log(value) }
+const move = (...value) => { console.log(value) }
+const moved = (...value) => { console.log(value) }
+
+const getHeightByGrid = (h: number) => 30 + (h - 1) * 40
+const getWidthByGrid = (w: number) => 77 + (w - 1) * 87
 
 </script>
 <template>
@@ -28,6 +36,10 @@ const moved = (value) => { console.log(value) }
       :col-num="12"
       :row-height="30"
       class="grid-generator"
+      horizontalShift
+      :verticalCompact="false"
+      :preventCollision="false"
+      :margin="[2, 2]"
     >
       <template #default="{ gridItemProps }">
         <grid-item
@@ -43,7 +55,44 @@ const moved = (value) => { console.log(value) }
           @move="move"
           @moved="moved"
         >
-          {{ item.i }}1
+          <div v-if="item.i === 5">
+            <grid-layout
+              v-model:layout="layoutInner"
+              :col-num="24"
+              :row-height="15"
+              horizontalShift
+              :verticalCompact="false"
+              :preventCollision="false"
+              :margin="[0, 0]"
+              :style="`width: ${getWidthByGrid(item.w)}px`"
+            >
+              <template #default="{ gridItemProps }">
+                <grid-item
+                  v-for="itemInner in layoutInner"
+                  :key="item.i"
+                  v-bind="gridItemProps"
+                  :x="itemInner.x"
+                  :y="itemInner.y"
+                  :w="itemInner.w"
+                  :h="itemInner.h"
+                  :i="itemInner.i"
+                  :maxH="(item.h * 2) + 1"
+                  :maxW="item.w"
+                  class="bg-primary"
+                >
+                  <div>
+                    {{ item }}
+                    <hr>
+                    {{ itemInner}}
+                  </div>
+<!--                  <div v-if="item.i === 5">-->
+<!--                    <img src="../assets/img/flower.jpg" :height="`${getHeightByGrid(item.h)}`" :width="`${getWidthByGrid(item.w)}`" />-->
+<!--                  </div>-->
+                </grid-item>
+              </template>
+            </grid-layout>
+<!--              <img src="../assets/img/flower.jpg" :height="`${getHeightByGrid(item.h)}`" :width="`${getWidthByGrid(item.w)}`" />-->
+          </div>
         </grid-item>
       </template>
     </grid-layout>
