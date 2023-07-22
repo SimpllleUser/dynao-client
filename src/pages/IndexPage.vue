@@ -85,13 +85,9 @@ const getWidthByGrid = (w: number) => 77 + (w - 1) * 87
                     <hr>
                     {{ itemInner}}
                   </div>
-<!--                  <div v-if="item.i === 5">-->
-<!--                    <img src="../assets/img/flower.jpg" :height="`${getHeightByGrid(item.h)}`" :width="`${getWidthByGrid(item.w)}`" />-->
-<!--                  </div>-->
                 </grid-item>
               </template>
             </grid-layout>
-<!--              <img src="../assets/img/flower.jpg" :height="`${getHeightByGrid(item.h)}`" :width="`${getWidthByGrid(item.w)}`" />-->
           </div>
         </grid-item>
       </template>
