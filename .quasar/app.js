@@ -21,7 +21,7 @@ import RootComponent from 'app/src/App.vue'
 import createStore from 'app/src/stores/index'
 import createRouter from 'app/src/router/index'
 
-import GridLayout from 'vue-grid-layout3'
+import VueGridLayout from 'vue-grid-layout3'
 
 
 export default async function (createAppFn, quasarUserOptions) {
@@ -60,7 +60,8 @@ export default async function (createAppFn, quasarUserOptions) {
 
       store.use(({ store }) => { store.router = router })
 
-  app.use(GridLayout)
+
+app.use(VueGridLayout)
 
   // Expose the app, the router and the store.
   // Note that we are not mounting the app here, since bootstrapping will be
