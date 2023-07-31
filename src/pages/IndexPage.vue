@@ -9,13 +9,8 @@
         <div><b>Source entity</b></div>
         <hr>
         <Vue3JsonEditor
-          v-model="state"
-          :show-btns="true"
-          :expandedOnStart="true"
-          @json-change="onJsonChange"
+          @json-change="handleChange"
         />
-        <hr>
-        {{ entity }}
       </div>
     </div>
   </div>
@@ -25,8 +20,7 @@
 import {defineComponent, reactive, ref, toRefs} from "vue"
 import { Vue3JsonEditor } from "vue3-json-editor"
 
-const onJsonChange = (value: JSON) => {
-  console.log('value:', value)
+const handleChange = (value: JSON) => {
   entity.value = value
 }
 
