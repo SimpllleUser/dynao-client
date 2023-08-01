@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-8">
         <div><b>Form</b></div>
+        <color-selector />
         <form-input v-model="text" v-bind="inputConfigurator" />
         <hr>
         <FormInputConfigurator v-model="inputConfigurator" />
@@ -24,6 +25,7 @@ import { Vue3JsonEditor } from "vue3-json-editor"
 import FormInput from "components/FormInputs/FormInput.vue";
 import FormInputConfigurator from "components/FormConfigurator/FormInputConfigurator.vue";
 import { BackgroundColors, Colors} from "boot/configurator-properties";
+import ColorSelector from "components/UI/ColorSelector.vue";
 
 const text = ref('')
 const handleChange = (value: JSON) => {
