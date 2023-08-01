@@ -44,6 +44,7 @@ const inputConfigurator = ref({
   loading: false,
   readonly: false,
   shadowText: '',
-  stackLabel: false
+  stackLabel: false,
+  labelColor: BackgroundColors.primary
 })
 </script>

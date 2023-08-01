@@ -16,11 +16,9 @@ const data = useVModel(props, 'modelValue', emit)
 </script>
 
 <template>
-  <div>{{ $attrs }}
   <q-input
     v-model="data"
     v-bind="$attrs"/>
-  </div>
 </template>
 
 <style scoped>

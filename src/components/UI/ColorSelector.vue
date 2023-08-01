@@ -6,6 +6,8 @@ import colorClasses from '../../boot/color-classes'
 
 const props = withDefaults(defineProps<{
   modelValue: string
+  label: string
+  customStyle: string
 }>(), {
   modelValue: 'red-5'
 })
@@ -31,11 +33,12 @@ const setColor = (classColor: string) => {
       no-caps
       class='text-black'
       style='width: 6rem'
+      :style='customStyle'
     >
       <template v-slot:label>
         <div class='row items-center no-wrap'>
           <div class='text-center text-black'>
-            color
+            {{ label }}
           </div>
         </div>
       </template>

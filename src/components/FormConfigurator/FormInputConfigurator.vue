@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useVModel } from '@vueuse/core'
 import { BackgroundColors, Colors, Option} from "boot/configurator-properties";
+import ColorSelector from 'components/UI/ColorSelector.vue'
 
 interface Configurator {
   counter?: boolean
@@ -24,6 +25,7 @@ interface Configurator {
   dark?: boolean
   color?: Colors
   bgColor?: Colors
+  labelColor?: Colors
 }
 
 interface Props {
@@ -53,16 +55,9 @@ const data = useVModel(props, 'modelValue', emit)
     Form input configurator
     <hr>
     <div>
-      <q-select filled v-model="data.color" :color="data.color" :options="colors" label="Colors"/>
-      <q-select
-        label="Background colors"
-        v-model="data.bgColor"
-        :color="data.color"
-        :options="bgColors"
-        emit-value
-        filled
-        map-options
-      />
+      <color-selector v-model="data.color" label='Variant' customStyle='width: 11rem' />
+      <color-selector v-model="data.bgColor" label='Background color' customStyle='width: 11rem' />
+      <color-selector v-model="data.labelColor" label='Label color' customStyle='width: 11rem' />
       <q-input v-model="data.label" label="Label"/>
       <q-input v-model="data.shadowText" label="ShadowText"/>
       <q-input v-model="data.prefix" label="Prefix"/>
