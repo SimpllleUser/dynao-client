@@ -40,11 +40,12 @@ import FormInputConfigurator from 'components/FormConfigurator/FormInputConfigur
 import { BackgroundColors, Colors } from 'boot/configurator-properties'
 import InputPropertyDrawer from 'components/UI/InputPropertyDrawer.vue'
 import FormCheckboxConfigurator from 'components/FormConfigurator/FormCheckboxConfigurator.vue'
+import IconSelector from 'components/UI/IconSelector.vue'
 
 
 const [showOption] = useToggle(false)
 
-const text = ref('')
+const icon = ref('add')
 const checkboxValue = ref(null)
 const handleChange = (value: JSON) => {
   entity.value = value

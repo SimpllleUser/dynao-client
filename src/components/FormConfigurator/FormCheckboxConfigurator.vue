@@ -2,6 +2,7 @@
 import { useVModel } from '@vueuse/core'
 import ColorSelector from 'components/UI/ColorSelector.vue'
 import SizeSelector from 'components/UI/SizeSelector.vue'
+import IconSelector from 'components/UI/IconSelector.vue'
 
 
 interface Props {
@@ -22,7 +23,7 @@ const propsStyle = {
   filled: true,
   labelColor: 'secondary',
   color: 'secondary',
-  size: 'md',
+  size: 'md'
 }
 
 </script>
@@ -34,10 +35,15 @@ const propsStyle = {
         <color-selector v-model='data.color' label='Variant' customStyle='width: 11rem' />
       </div>
     </div>
-
     <div class='row q-mb-md'>
-      <div class='col-6'>
+      <div class='col-6 q-pb-sm'>
         <size-selector v-model='data.size' />
+      </div>
+      <div class='col-6'>
+        <icon-selector v-model='data.checkedIcon' label='Checked icon' />
+      </div>
+      <div class='col-6'>
+        <icon-selector v-model='data.uncheckedIcon' label='Unchecked icon' />
       </div>
     </div>
 
@@ -55,6 +61,9 @@ const propsStyle = {
       </div>
       <div class='col-6'>
         <q-checkbox v-model='data.leftLabel' label='Left label' v-bind='propsStyle' />
+      </div>
+      <div class='col-6'>
+        <q-checkbox v-model='data.keepColor' label='Keep color' v-bind='propsStyle' />
       </div>
     </div>
   </div>
