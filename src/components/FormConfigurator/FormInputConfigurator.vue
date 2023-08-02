@@ -10,6 +10,8 @@ interface Configurator {
   prefix?: string
   suffix?: string
   label?: string
+  hint?: string
+  mask?: string
   maxlength?: number
   stackLabel?: boolean
   clearable?: boolean
@@ -48,11 +50,28 @@ const emit = defineEmits<Emits>()
 
 const data = useVModel(props, 'modelValue', emit)
 
+const onKeyDown = (event) => {
+  const inputValue = event.key
+  const isDeleteAllowed = /^[#SNAaXx]$/.test(inputValue) || event.keyCode === 8
+
+  if (!isDeleteAllowed) {
+    event.preventDefault()
+  }
+}
+
 const propsStyle = {
   filled: true,
   labelColor: 'secondary',
-  color: 'secondary',
+  color: 'secondary'
 }
+
+const hintDescriptions = [
+  { char: '#', description: 'Numeric' },
+  { char: 'N', description: 'Alphanumeric, case insensitive for letters' },
+  { char: 'A', description: 'Letter, transformed to uppercase' },
+  { char: 'X', description: 'Alphanumeric, transformed to uppercase for letters' },
+  { char: 'x', description: 'Alphanumeric, transformed to lowercase for letters' }
+]
 
 </script>
 
@@ -73,10 +92,29 @@ const propsStyle = {
     </div>
 
     <q-input v-model='data.label' label='Label' v-bind='propsStyle' class='q-mb-md' />
+    <q-input v-model='data.hint' label='Hint' v-bind='propsStyle' class='q-mb-md' />
     <q-input v-model='data.shadowText' label='ShadowText' v-bind='propsStyle' class='q-mb-md' />
     <q-input v-model='data.prefix' label='Prefix' v-bind='propsStyle' class='q-mb-md' />
     <q-input v-model='data.suffix' label='Suffix' v-bind='propsStyle' class='q-mb-md' />
+    <div>
+      <q-tooltip anchor='top middle' self='bottom middle' :offset='[10, 10]'>
+        <div>
+          <div class='row q-mb-sm' v-for='describe in hintDescriptions' :key='describe.char'>
+            <div class='col-2'>
+              <q-badge color='secondary'>
+                {{ describe.char }}
+              </q-badge>
+            </div>
+            <div class='col-10'>
+              {{ describe.description }}
+            </div>
+          </div>
+        </div>
+      </q-tooltip>
+      <q-input v-model='data.mask' label='Mask' v-bind='propsStyle' @keydown='onKeyDown' class='q-mb-md' />
+    </div>
     <q-input v-model='data.maxlength' type='number' label='Max length' v-bind='propsStyle' class='q-mb-md' />
+
     <div class='row'>
       <div class='col-6'>
         <q-checkbox v-model='data.loading' label='Loading' v-bind='propsStyle' />
