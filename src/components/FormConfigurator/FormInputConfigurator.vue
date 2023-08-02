@@ -25,6 +25,7 @@ interface Configurator {
   outlined?: boolean
   filled?: boolean
   dark?: boolean
+  autogrow?: boolean /// only for textarea
   color?: Colors
   bgColor?: Colors
   labelColor?: Colors
@@ -157,6 +158,9 @@ const hintDescriptions = [
       </div>
       <div class='col-6'>
         <q-checkbox v-model='data.dark' label='Dark' v-bind='propsStyle' />
+      </div>
+      <div class='col-6'>
+        <q-checkbox v-model='data.autogrow' label='Autogrow only for textarea' v-bind='propsStyle' />
       </div>
     </div>
   </div>
