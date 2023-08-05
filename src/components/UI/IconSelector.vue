@@ -1,8 +1,8 @@
 <script lang='ts' setup>
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useVModel } from '@vueuse/core'
 
-import icons from '../../boot/icon-names'
+import iconsSource from '../../boot/icon-names'
 
 const props = withDefaults(defineProps<{
   modelValue: string
@@ -27,6 +27,15 @@ const propsStyle = {
   size: 'md',
 }
 
+const icons = ref(iconsSource)
+
+const searchIcon = (val, update) => {
+  update(() => {
+    const needle = val.toLowerCase()
+    icons.value = iconsSource.filter(v => v.toLowerCase().indexOf(needle) > -1)
+  })
+}
+
 </script>
 
 <template>
@@ -36,8 +45,10 @@ const propsStyle = {
         v-model='data'
         :options='icons'
         :label='label'
+        @filter="searchIcon"
         :virtual-scroll-slice-size='25'
         clearable
+        use-input
         v-bind='propsStyle'
       >
         <template v-slot:selected>
