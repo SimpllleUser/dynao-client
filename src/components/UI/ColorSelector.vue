@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { defineProps } from 'vue'
+import { computed, defineProps, ref } from 'vue'
 import { useVModel } from '@vueuse/core'
 
 import colorClasses from '../../boot/color-classes'
@@ -19,9 +19,20 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const data = useVModel(props, 'modelValue', emit)
+const inputSearchValue = ref('')
 const setColor = (classColor: string) => {
   data.value = classColor
 }
+
+const inputSearchLabel = computed(() => `Search ${props.label?.toLowerCase()}`)
+
+const filteredItems = computed(() => inputSearchValue.value.trim()?.length
+  ? colorClasses
+  .filter((className: string) => className
+    .toLowerCase()
+    .includes(inputSearchValue.value.toLowerCase()))
+  : colorClasses
+)
 </script>
 
 <template>
@@ -42,7 +53,9 @@ const setColor = (classColor: string) => {
           </div>
         </div>
       </template>
-
+      <div class='row q-px-sm'>
+        <q-input v-model='inputSearchValue' :label='inputSearchLabel' />
+      </div>
       <div
         style='
           width: 100%;
@@ -51,19 +64,27 @@ const setColor = (classColor: string) => {
           flex-wrap: wrap;'
       >
         <div
-          v-for='color in colorClasses'
+          v-for='color in filteredItems'
           :key='color'
           clickable
           v-close-popup
           @click='setColor(color)'
-          class='cursor-pointer'
+          class='cursor-pointer color-item'
           :class='`bg-${color}`'
           style='width: 1rem; height: 1rem'
         >
+          <q-tooltip :delay='200'>
+            {{ color }}
+          </q-tooltip>
         </div>
       </div>
     </q-btn-dropdown>
   </div>
 </template>
 
-<style scoped></style>
+<style lang='scss' scoped>
+.color-item:hover {
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+</style>
