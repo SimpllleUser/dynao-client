@@ -2,8 +2,7 @@
 import { useVModel } from '@vueuse/core'
 import { BackgroundColors, Colors, Option } from 'boot/configurator-properties'
 import ColorSelector from 'components/UI/ColorSelector.vue'
-import ListEditable from 'components/UI/ListEditable.vue'
-import { ref } from 'vue'
+import ListEditable from 'components/UI/ListEditabe/index.vue'
 
 interface Configurator {
   counter?: boolean
