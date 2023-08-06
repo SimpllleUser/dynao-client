@@ -3,7 +3,9 @@
     <div class='row'>
       <div class='col-8'>
         <div><b>Form | {{ showOption }}</b></div>
-        <q-select v-model='select' v-bind='selectConfigurator' />
+        <hr>
+        <ui-by-json :elements='uiElements' />
+<!--        <q-select v-model='select' v-bind='selectConfigurator' />-->
 
 
         <!--        <q-checkbox-->
@@ -46,6 +48,7 @@ import FormInput from 'components/FormInputs/FormInput.vue'
 import FormInputConfigurator from 'components/FormConfigurator/FormInputConfigurator.vue'
 import FormCheckboxConfigurator from 'components/FormConfigurator/FormCheckboxConfigurator.vue'
 import IconSelector from 'components/UI/IconSelector.vue'
+import UiByJson from 'components/Ui-by-json.vue'
 
 
 const [showOption] = useToggle(false)
@@ -91,4 +94,46 @@ const checkboxConfigurator = ref({
   bgColor: BackgroundColors.white,
   labelColor: BackgroundColors.primary
 })
+
+const uiElements = [
+  {
+    type: 'q-input',
+    config: {
+      modelValue: '123123',
+      label: 'q-input',
+      mask: '####-##-##'
+    },
+    events: {
+      'update:model-value': (value) => { console.log(value) }
+    }
+  },
+  {
+    type: 'q-select',
+    config: {
+      label: 'q-select'
+    },
+  },
+  {
+    type: 'q-checkbox',
+    config: {
+      label: 'q-checkbox'
+    },
+  },
+  {
+    type: 'q-radio',
+    config: {
+      label: 'q-radio'
+    },
+  },
+  {
+    type: 'q-btn',
+    config: {
+      icon: 'pen',
+      label: 'q-btn'
+    },
+    events: {
+      'click': (value: string) => { console.log(value) }
+    }
+  },
+]
 </script>
