@@ -4,6 +4,9 @@
       <div class='col-8'>
         <div><b>Form | {{ showOption }}</b></div>
         <hr>
+        <component is='h1'>
+          13123
+        </component>
         <ui-by-json :elements='uiElements' />
 <!--        <q-select v-model='select' v-bind='selectConfigurator' />-->
 
