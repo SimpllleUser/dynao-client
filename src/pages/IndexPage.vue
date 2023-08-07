@@ -4,9 +4,6 @@
       <div class='col-8'>
         <div><b>Form | {{ showOption }}</b></div>
         <hr>
-        <component is='h1'>
-          13123
-        </component>
         <ui-by-json :elements='uiElements' />
 <!--        <q-select v-model='select' v-bind='selectConfigurator' />-->
 
@@ -51,7 +48,7 @@ import FormInput from 'components/FormInputs/FormInput.vue'
 import FormInputConfigurator from 'components/FormConfigurator/FormInputConfigurator.vue'
 import FormCheckboxConfigurator from 'components/FormConfigurator/FormCheckboxConfigurator.vue'
 import IconSelector from 'components/UI/IconSelector.vue'
-import UiByJson from 'components/Ui-by-json.vue'
+import UiByJson from 'components/Ui-json/Ui-by-json.vue'
 
 
 const [showOption] = useToggle(false)
@@ -132,7 +129,21 @@ const uiElements = [
     type: 'q-btn',
     config: {
       icon: 'pen',
-      label: 'q-btn'
+      content: 'q-btn'
+    },
+    parent: {
+      type: 'h1',
+      parent: {
+        type: 'h2',
+      },
+    },
+    child: {
+      type: 'h3',
+      label: 'h3',
+      child: {
+        type: 'h2',
+        label: 'h2'
+      },
     },
     events: {
       'click': (value: string) => { console.log(value) }
