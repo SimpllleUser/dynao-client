@@ -1,5 +1,6 @@
 <script lang='ts' setup>
 import { UIElementByJson } from 'components/Ui-json/types'
+import Condition from 'components/UI/Condition.vue'
 
 interface Props {
   component: UIElementByJson
@@ -10,18 +11,18 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <div v-if='component.parent'>
+  <condition :is-true='component.parent'>
     <ui-json-parent :component='component.parent' >
       <component :is='component.type'>
         <slot></slot>
       </component>
     </ui-json-parent>
-  </div>
-  <div v-else>
-    <component :is='component.type'>
-      <slot></slot>
-    </component>
-  </div>
+    <template #else>
+      <component :is='component.type'>
+        <slot></slot>
+      </component>
+    </template>
+  </condition>
 </template>
 
 
