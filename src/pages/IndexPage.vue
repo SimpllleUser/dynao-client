@@ -3,21 +3,10 @@
     <div class='row'>
       <div class='col-8'>
         <div><b>Form | {{ showOption }}</b></div>
-        <hr>
-        <ui-by-json :elements='uiElements' />
-<!--        <q-select v-model='select' v-bind='selectConfigurator' />-->
-
-
-        <!--        <q-checkbox-->
-        <!--          v-model='checkboxValue'-->
-        <!--          v-bind='checkboxConfigurator'-->
-        <!--        />-->
-        <!--        <form-input-->
-        <!--          v-model='text'-->
-        <!--          v-bind='inputConfigurator'-->
-        <!--          @focus='showOption = true'-->
-        <!--        />-->
-        <hr>
+        <q-input v-model='entity' v-bind='test' />
+<!--        <hr>-->
+<!--        <ui-by-json :elements='uiElements' />-->
+<!--        <hr>-->
       </div>
       <div class='col-4'>
         <div><b>Source entity</b></div>
@@ -29,10 +18,8 @@
     </div>
 
     <input-property-drawer v-model='showOption' label='Input properties'>
-      <FormSelectorConfigurator v-model='selectConfigurator' />
-      <!--      <FormCheckboxConfigurator v-model='checkboxConfigurator' />-->
-      <!--      <FormCheckboxConfigurator v-model='checkboxConfigurator' />-->
-      <!--      <FormInputConfigurator v-model='inputConfigurator' />-->
+      <common-form-input-props input-name='q-input' v-model='test' />
+      <form-input-props v-model='test'/>
     </input-property-drawer>
   </div>
 </template>
@@ -49,51 +36,23 @@ import FormInputConfigurator from 'components/FormConfigurator/FormInputConfigur
 import FormCheckboxConfigurator from 'components/FormConfigurator/FormCheckboxConfigurator.vue'
 import IconSelector from 'components/UI/IconSelector.vue'
 import UiByJson from 'components/Ui-json/Ui-by-json.vue'
+import CommonFormInputProps from 'components/UI/CommonFormInputProps.vue'
+import FormInputProps from 'components/FormInputs/FormInputProps.vue'
 
+
+const entity = ref('')
+const test = ref({})
 
 const [showOption] = useToggle(false)
 
-const icon = ref('add')
-const select = ref(null)
-const checkboxValue = ref(null)
 const handleChange = (value: JSON) => {
   entity.value = value
 }
 
-const entity = ref({})
+const inputConfigurator = ref({})
 
-const inputConfigurator = ref({
-  color: Colors.primary,
-  bgColor: BackgroundColors.white,
-  clearable: false,
-  counter: false,
-  disable: false,
-  label: '',
-  loading: false,
-  readonly: false,
-  shadowText: '',
-  stackLabel: false,
-  labelColor: BackgroundColors.primary
-})
-
-const selectConfigurator = ref({
-  color: Colors.primary,
-  bgColor: BackgroundColors.white,
-  clearable: false,
-  counter: false,
-  disable: false,
-  label: '',
-  loading: false,
-  readonly: false,
-  shadowText: '',
-  stackLabel: false,
-  labelColor: BackgroundColors.primary
-})
-const checkboxConfigurator = ref({
-  color: Colors.primary,
-  bgColor: BackgroundColors.white,
-  labelColor: BackgroundColors.primary
-})
+const selectConfigurator = ref({})
+const checkboxConfigurator = ref({})
 
 const uiElements = [
   {
