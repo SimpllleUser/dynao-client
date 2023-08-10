@@ -7,18 +7,17 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const elements2 = [{ 'type': 'q-input' }, { 'type': 'q-select' }, { 'type': 'q-checkbox' }, { 'type': 'q-radio' }, { 'type': 'q-btn' }]
 
 </script>
 
 <template>
   <condition :is-true='component.child'>
-    <component :is='component.type' style='border: 1px solid red; padding: 5px'>
-      {{ component.label }}
-      <ui-json-children :component='component.child'>
-      </ui-json-children>
+    <component :is='component.type' v-bind='component.config'>
+      <ui-json-children  v-for='(itemChild, key) in component.child' :key='key' :component='itemChild' />
     </component>
     <template #else>
-      <component :is='component.type' style='border: 1px solid blue; padding: 5px'>{{ component.label }}</component>
+      <component :is='component.type' v-bind='component.config' > {{ component.child }}  </component>
     </template>
   </condition>
 

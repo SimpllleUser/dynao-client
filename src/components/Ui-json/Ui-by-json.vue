@@ -28,8 +28,7 @@ const elements2 = [{ 'type': 'q-input' }, { 'type': 'q-select' }, { 'type': 'q-c
       <div v-if='component.parent'>
         <ui-json-parent :component='component.parent'>
           <component :is='component.name' v-bind='component.config' v-on='component.events'>
-            {{ component.config.content }}
-            <ui-json-children v-if='component.child' :component='component.child' />
+           <ui-json-children v-if='component.child' :component='component.child' />
           </component>
         </ui-json-parent>
       </div>

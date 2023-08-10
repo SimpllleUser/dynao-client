@@ -13,12 +13,12 @@ const props = defineProps<Props>()
 <template>
   <condition :is-true='component.parent'>
     <ui-json-parent :component='component.parent' >
-      <component :is='component.type'>
+      <component :is='component.type' v-bind='component.config'>
         <slot></slot>
       </component>
     </ui-json-parent>
     <template #else>
-      <component :is='component.type'>
+      <component :is='component.type' v-bind='component.config'>
         <slot></slot>
       </component>
     </template>

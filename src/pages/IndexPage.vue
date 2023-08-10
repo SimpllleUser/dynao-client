@@ -4,9 +4,11 @@
       <div class='col-8'>
         <div><b>Form | {{ showOption }}</b></div>
         <q-input v-model='entity' v-bind='test' />
-<!--        <hr>-->
-<!--        <ui-by-json :elements='uiElements' />-->
-<!--        <hr>-->
+        <component :is="'q-input'" v-model='entity' />
+        <ui-by-json :elements='uiElements' />
+        <ui-json-children v-for='(element, key) in uiElements' :key='key' :component='element'>
+          {{ element }} {{ key }}
+        </ui-json-children>
       </div>
       <div class='col-4'>
         <div><b>Source entity</b></div>
@@ -18,14 +20,19 @@
     </div>
 
     <input-property-drawer v-model='showOption' label='Input properties'>
-      <common-form-input-props input-name='q-input' v-model='test' />
-      <form-input-props v-model='test'/>
+      <div>
+        <form-input-props-2 />
+      </div>
+      <div v-if='false'>
+        <common-form-input-props input-name='q-input' v-model='test' />
+        <form-input-props v-model='test' />
+      </div>
     </input-property-drawer>
   </div>
 </template>
 
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useToggle } from '@vueuse/core'
 import { Vue3JsonEditor } from 'vue3-json-editor'
 import { BackgroundColors, Colors } from 'boot/configurator-properties'
@@ -38,10 +45,13 @@ import IconSelector from 'components/UI/IconSelector.vue'
 import UiByJson from 'components/Ui-json/Ui-by-json.vue'
 import CommonFormInputProps from 'components/UI/CommonFormInputProps.vue'
 import FormInputProps from 'components/FormInputs/FormInputProps.vue'
+import FormInputProps2 from 'components/FormInputs/FormInputProps2.vue'
+import UiJsonChildren from 'components/Ui-json/Ui-json-children.vue'
 
 
 const entity = ref('')
 const test = ref({})
+const num = ref(0)
 
 const [showOption] = useToggle(false)
 
@@ -53,60 +63,69 @@ const inputConfigurator = ref({})
 
 const selectConfigurator = ref({})
 const checkboxConfigurator = ref({})
+const childrenBtnClick = '!!!!!!!!!!!!`'
 
-const uiElements = [
+const uiElements = computed(() => [
   {
-    type: 'q-input',
+    type: 'div',
     config: {
-      modelValue: '123123',
-      label: 'q-input',
-      mask: '####-##-##'
+      class: 'bg-primary'
     },
-    events: {
-      'update:model-value': (value) => { console.log(value) }
-    }
-  },
-  {
-    type: 'q-select',
-    config: {
-      label: 'q-select'
-    },
-  },
-  {
-    type: 'q-checkbox',
-    config: {
-      label: 'q-checkbox'
-    },
-  },
-  {
-    type: 'q-radio',
-    config: {
-      label: 'q-radio'
-    },
-  },
-  {
-    type: 'q-btn',
-    config: {
-      icon: 'pen',
-      content: 'q-btn'
-    },
-    parent: {
-      type: 'h1',
-      parent: {
-        type: 'h2',
-      },
-    },
-    child: {
-      type: 'h3',
-      label: 'h3',
-      child: {
-        type: 'h2',
-        label: 'h2'
-      },
-    },
-    events: {
-      'click': (value: string) => { console.log(value) }
-    }
-  },
-]
+    // parent: {
+    //   type: 'div',
+    //   config: {
+    //     class: 'bg-primary'
+    //   },
+    //   parent: {
+    //     type: 'div',
+    //   },
+    // },
+    child: [
+      {
+        type: 'div',
+        config: {
+          class: 'row bg-secondary'
+        },
+        child: [
+          {
+            type: 'div',
+            config: {
+              class: 'col-4 bg-primary'
+            },
+            child: [
+              {
+                type: 'q-btn',
+                config: {
+                  icon: 'checked',
+                  label: 'Click me'
+                }
+              },
+            ]
+          },
+          {
+            type: 'div',
+            config: {
+              class: 'col-4 bg-primary'
+            },
+            child: [
+              {
+                type: 'q-btn',
+                config: {
+                  icon: 'checked',
+                  label: 'Click me'
+                }
+              },
+            ]
+          }
+        ]
+      }
+    ]
+    // events: {
+    //   'click': () => {
+    //     num.value += 1
+    //     console.log(num.value)
+    //   }
+    // }
+  }
+])
 </script>
