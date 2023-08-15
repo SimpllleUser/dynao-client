@@ -8,7 +8,7 @@ export enum ComponentTypes {
 export interface UIElementByJson {
   type: ComponentTypes
   parent: UIElementByJson
-  child: UIElementByJson
+  children: UIElementByJson
   events: object,
-  config: object,
+  props: object,
 }

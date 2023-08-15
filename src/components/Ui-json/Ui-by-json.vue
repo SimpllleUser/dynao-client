@@ -27,12 +27,12 @@ const elements2 = [{ 'type': 'q-input' }, { 'type': 'q-select' }, { 'type': 'q-c
     <div v-for='(component, index) in components' :key='index'>
       <div v-if='component.parent'>
         <ui-json-parent :component='component.parent'>
-          <component :is='component.name' v-bind='component.config' v-on='component.events'>
-           <ui-json-children v-if='component.child' :component='component.child' />
+          <component :is='component.name' v-bind='component.props' v-on='component.events'>
+           <ui-json-children v-if='component.children' :component='component.children' />
           </component>
         </ui-json-parent>
       </div>
-      <component v-else :is='component.name' v-bind='component.config' v-on='component.events' />
+      <component v-else :is='component.name' v-bind='component.props' v-on='component.events' />
     </div>
   </div>
 </template>

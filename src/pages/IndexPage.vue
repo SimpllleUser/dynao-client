@@ -68,34 +68,34 @@ const childrenBtnClick = '!!!!!!!!!!!!`'
 const uiElements = computed(() => [
   {
     type: 'div',
-    config: {
+    props: {
       class: 'bg-primary'
     },
     // parent: {
     //   type: 'div',
-    //   config: {
+    //   props: {
     //     class: 'bg-primary'
     //   },
     //   parent: {
     //     type: 'div',
     //   },
     // },
-    child: [
+    children: [
       {
         type: 'div',
-        config: {
+        props: {
           class: 'row bg-secondary'
         },
-        child: [
+        children: [
           {
             type: 'div',
-            config: {
+            props: {
               class: 'col-4 bg-primary'
             },
-            child: [
+            children: [
               {
                 type: 'q-btn',
-                config: {
+                props: {
                   icon: 'checked',
                   label: 'Click me'
                 }
@@ -104,13 +104,13 @@ const uiElements = computed(() => [
           },
           {
             type: 'div',
-            config: {
+            props: {
               class: 'col-4 bg-primary'
             },
-            child: [
+            children: [
               {
                 type: 'q-btn',
-                config: {
+                props: {
                   icon: 'checked',
                   label: 'Click me'
                 }
