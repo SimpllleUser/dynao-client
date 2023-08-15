@@ -26,6 +26,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.9",
     "@quasar/app-webpack": "^3.0.0",
+    "@types/lodash": "^4.14.197",
     "@types/node": "^12.20.21",
     "eslint": "^8.46.0",
     "eslint-config-airbnb": "^19.0.4",

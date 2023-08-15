@@ -13,30 +13,20 @@ const elements2 = [{ 'type': 'q-input' }, { 'type': 'q-select' }, { 'type': 'q-c
 
 const emit = defineEmits(['update:modelValue'])
 const handleModelUpdate = (newValue: string | number | boolean) => {
-  /// Возможно надо передавать из children из какого комопнента или по какомуц ключу идет обращение к v-model
-  //  if(!props.component.props?.model) {
-  //    console.log('Start')
-  //    console.log(newValue)
-  //    console.log({ ...props.modelValue })
-  //    console.log({ ...props })
-  //    console.log('End')
-  //  }
-
-  const vModel = props.component.props.model
+  const vModel = props.component.props?.model
     ? {
-      ...props.modelValue,
+      ...props?.modelValue,
       [`${props.component.props.model}`]: newValue,
     }
     : newValue
-  console.log(newValue)
   emit('update:modelValue', vModel)
 }
 
 const componentSupportsVModel = (type: string) => {
-  // Тут список компонентов, которые поддерживают v-model или аналог
   const componentsWithVModel = ['q-input', 'q-select', 'q-checkbox', 'q-radio']
   return componentsWithVModel.includes(type)
 }
+
 </script>
 
 <template>
@@ -50,7 +40,6 @@ const componentSupportsVModel = (type: string) => {
         @update:modelValue='handleModelUpdate' />
     </component>
     <template #else>
-      {{ modelValue[component.props.model] }}
       <component
         v-if='componentSupportsVModel(component.type)'
         :is='component.type'
