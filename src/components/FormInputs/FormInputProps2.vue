@@ -53,13 +53,6 @@ const fields = [
         },
     ),
 ]
-const elements2 = [
-    { type: 'q-input' },
-    { type: 'q-select' },
-    { type: 'q-checkbox' },
-    { type: 'q-radio' },
-    { type: 'q-btn' },
-]
 
 const value = ref({
     type: 'text',

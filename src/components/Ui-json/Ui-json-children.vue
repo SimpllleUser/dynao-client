@@ -1,4 +1,7 @@
+
 <script lang='ts' setup>
+// 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio'
+
 import { UIElementByJson } from 'components/Ui-json/types'
 import Condition from 'components/UI/Condition.vue'
 
@@ -8,7 +11,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const elements2 = [{ 'type': 'q-input' }, { 'type': 'q-select' }, { 'type': 'q-checkbox' }, { 'type': 'q-radio' }, { 'type': 'q-btn' }]
 
 
 const emit = defineEmits(['update:modelValue'])
