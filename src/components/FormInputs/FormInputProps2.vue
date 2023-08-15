@@ -4,13 +4,15 @@ import UiJsonChildren from 'components/Ui-json/Ui-json-children.vue'
 
 const fields = [
     {
+        id: '1',
         type: 'div',
         props: {
-            type: '',
-            debounce: '',
+            // type: '',
+            // debounce: '',
         },
         children: [
             {
+                id: '1.1',
                 type: 'q-select',
                 props: {
                     model: 'type',
@@ -28,14 +30,17 @@ const fields = [
                         'date',
                         'datetime-local',
                     ],
+                  clearable: true,
                 },
             },
             {
+                id: '1.2',
                 type: 'q-input',
                 props: {
                     model: 'debounce',
                     label: 'Debounce',
                     inputType: 'number',
+                    clearable: true,
                 },
             },
         ],
@@ -49,18 +54,22 @@ const elements2 = [
     { type: 'q-btn' },
 ]
 
-const test = ref({})
+const test = ref({
+    type: 'text',
+    debounce: '200',
+})
 </script>
 <!--v-model="test[`${field.modelKey}`]"-->
 
 <template>
     <div>
-        {{ test }}
+      {{ test }}
         <UiJsonChildren
             v-for="(field, index) in fields"
-            :key="index"
-            v-model="test[`${field.props.model}`]"
+            :key="field.id"
+            v-model="test"
             :component="field"
+            :optional-key="optionalKey"
         >
         </UiJsonChildren>
     </div>

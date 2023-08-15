@@ -6,9 +6,10 @@ export enum ComponentTypes {
 }
 
 export interface UIElementByJson {
+  id?: string
   type: ComponentTypes
   parent: UIElementByJson
   children: UIElementByJson
   events: object,
-  props: object,
+  props: object & { modelValue?: any },
 }
