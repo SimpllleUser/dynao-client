@@ -1,9 +1,11 @@
 <script lang='ts' setup>
 
+// 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio'
+
 import { computed } from 'vue'
-import { ComponentTypes, UIElementByJson } from 'components/Ui-json/types'
-import UiJsonParent from 'components/Ui-json/Ui-json-parent.vue'
-import UiJsonChildren from 'components/Ui-json/Ui-json-children.vue'
+import { ComponentTypes, UIElementByJson } from 'src/modules/UIParser/types'
+import UiParserParent from 'src/modules/UIParser/components/UiPareserParent.vue'
+import UiParserChildren from 'src/modules/UIParser/components/UiParserChildren.vue'
 
 interface Props {
   elements: Array<UIElementByJson>
@@ -18,19 +20,17 @@ const components = computed(() => props.elements.map((element) => ({
   name: element.type
 })))
 
-const elements2 = [{ 'type': 'q-input' }, { 'type': 'q-select' }, { 'type': 'q-checkbox' }, { 'type': 'q-radio' }, { 'type': 'q-btn' }]
-
 </script>
 
 <template>
   <div>
     <div v-for='(component, index) in components' :key='index'>
       <div v-if='component.parent'>
-        <ui-json-parent :component='component.parent'>
+        <ui-parser-parent :component='component.parent'>
           <component :is='component.name' v-bind='component.props' v-on='component.events'>
-           <ui-json-children v-if='component.children' :component='component.children' />
+           <ui-parser-children v-if='component.children' :component='component.children' />
           </component>
-        </ui-json-parent>
+        </ui-parser-parent>
       </div>
       <component v-else :is='component.name' v-bind='component.props' v-on='component.events' />
     </div>

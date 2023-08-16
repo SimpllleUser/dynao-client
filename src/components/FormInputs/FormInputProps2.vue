@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import UiJsonChildren from 'components/Ui-json/Ui-json-children.vue'
-import { getCol, getRow } from 'boot/component-factories'
+import { getCol, getRow } from 'src/modules/UIParser/helpers/ui-factories'
+import UiParserChildren from '../../modules/UIParser/components/UiParserChildren.vue'
 
-const fields = [
+const components = [
     getRow(
         [
             getCol([
@@ -63,14 +63,13 @@ const value = ref({
 
 <template>
     <div>
-        <UiJsonChildren
-            v-for="(field, index) in fields"
-            :key="field.id"
+        <ui-parser-children
+            v-for="component in components"
+            :key="component.id"
             v-model="value"
-            :component="field"
+            :component="component"
             :optional-key="optionalKey"
-        >
-        </UiJsonChildren>
+        />
     </div>
 </template>
 

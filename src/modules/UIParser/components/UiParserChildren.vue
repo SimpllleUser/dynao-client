@@ -2,7 +2,7 @@
 <script lang='ts' setup>
 // 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio'
 
-import { UIElementByJson } from 'components/Ui-json/types'
+import { UIElementByJson } from 'src/modules/UIParser/types'
 import Condition from 'components/UI/Condition.vue'
 
 interface Props {
@@ -34,7 +34,7 @@ const componentSupportsVModel = (type: string) => {
 <template>
   <condition :is-true='component.children'>
     <component :is='component.type' v-bind='component.props'>
-      <ui-json-children
+      <ui-parser-children
         v-for='(itemChild, key) in component.children'
         :key='itemChild.id'
         :component='itemChild'

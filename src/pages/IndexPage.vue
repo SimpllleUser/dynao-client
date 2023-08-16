@@ -42,11 +42,11 @@ import FormInput from 'components/FormInputs/FormInput.vue'
 import FormInputConfigurator from 'components/FormConfigurator/FormInputConfigurator.vue'
 import FormCheckboxConfigurator from 'components/FormConfigurator/FormCheckboxConfigurator.vue'
 import IconSelector from 'components/UI/IconSelector.vue'
-import UiByJson from 'components/Ui-json/Ui-by-json.vue'
+import UiByJson from '../modules/UIParser/components/UiParser.vue'
 import CommonFormInputProps from 'components/UI/CommonFormInputProps.vue'
 import FormInputProps from 'components/FormInputs/FormInputProps.vue'
 import FormInputProps2 from 'components/FormInputs/FormInputProps2.vue'
-import UiJsonChildren from 'components/Ui-json/Ui-json-children.vue'
+import UiJsonChildren from '../modules/UIParser/components/UiParserChildren.vue'
 
 
 const entity = ref('')

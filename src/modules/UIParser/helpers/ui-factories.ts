@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { Children, ComponentTypes, Parent, Props } from 'components/Ui-json/types'
+import { Children, ComponentTypes, Parent, Props } from '../types'
 
 export const componentByType = (
   type: ComponentTypes,
