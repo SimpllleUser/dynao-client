@@ -21,10 +21,11 @@
 
     <input-property-drawer v-model='showOption' label='Input properties'>
       <div>
+        <common-input-configurator />
         <form-input-props-2 />
       </div>
       <div v-if='false'>
-        <common-form-input-props input-name='q-input' v-model='test' />
+        <!--        <common-form-input-props input-name='q-input' v-model='test' />-->
         <form-input-props v-model='test' />
       </div>
     </input-property-drawer>
@@ -35,18 +36,11 @@
 import { computed, ref } from 'vue'
 import { useToggle } from '@vueuse/core'
 import { Vue3JsonEditor } from 'vue3-json-editor'
-import { BackgroundColors, Colors } from 'boot/configurator-properties'
 import InputPropertyDrawer from 'components/UI/InputPropertyDrawer.vue'
-import FormSelectorConfigurator from 'components/FormConfigurator/FormSelectorConfigurator.vue'
-import FormInput from 'components/FormInputs/FormInput.vue'
-import FormInputConfigurator from 'components/FormConfigurator/FormInputConfigurator.vue'
-import FormCheckboxConfigurator from 'components/FormConfigurator/FormCheckboxConfigurator.vue'
-import IconSelector from 'components/UI/IconSelector.vue'
 import UiByJson from '../modules/UIParser/components/UiParser.vue'
-import CommonFormInputProps from 'components/UI/CommonFormInputProps.vue'
 import FormInputProps from 'components/FormInputs/FormInputProps.vue'
-import FormInputProps2 from 'components/FormInputs/FormInputProps2.vue'
 import UiJsonChildren from '../modules/UIParser/components/UiParserChildren.vue'
+import CommonInputConfigurator from 'src/modules/ConfiguratorComponents/components/CommonInputConfigurator.vue'
 
 
 const entity = ref('')
@@ -99,7 +93,7 @@ const uiElements = computed(() => [
                   icon: 'checked',
                   label: 'Click me'
                 }
-              },
+              }
             ]
           },
           {
@@ -114,7 +108,7 @@ const uiElements = computed(() => [
                   icon: 'checked',
                   label: 'Click me'
                 }
-              },
+              }
             ]
           }
         ]

@@ -1,11 +1,10 @@
 export type BaseType = string | boolean | number | object
 
 export enum InputComponentTypes {
-  Input = 'input',
-  Select = 'Select',
-  Checkbox = 'checkbox',
-  Radio = 'radio',
-  Div = 'div',
+  Input = 'q-input',
+  Select = 'q-select',
+  Checkbox = 'q-checkbox',
+  Radio = 'q-radio',
 }
 
 export type BlockComponentTypes =
@@ -47,7 +46,8 @@ export type BlockComponentTypes =
 
 export type ComponentTypes = InputComponentTypes | BlockComponentTypes
 
-export type Props = { class?:  string, model?: string, id?: string, modelValue?: BaseType }
+export type Props = any
+// export type Props = { placeholder?:  string, label?:  string, class?:  string, model?: string, id?: string, modelValue?: BaseType }
 
 export interface UIElementByJson {
   id?: string

@@ -68,7 +68,7 @@ const value = ref({
 
 <template>
     <div>
-        <ui-parserChildren
+        <UiParserChildren
             v-for="component in components"
             :key="component.id"
             v-model="value"
