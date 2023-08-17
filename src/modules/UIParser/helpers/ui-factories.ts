@@ -1,23 +1,18 @@
-import _ from 'lodash'
+import { curry } from 'lodash'
 
 import { Children, ComponentTypes, Parent, Props } from '../types'
 
 export const componentByType = (
   type: ComponentTypes,
-  children?: Children,
+  props?: Props,
+children?: Children,
   parent?: Children,
-  props?: Props
 ) => ({
   type,
+  props: props || {},
   children: children || [],
   parent: parent || [],
-  props: props || {}
 })
-
-// const getClassWithDefault = (defaultClass: string, props: Props): Props => ({
-//   class: `${defaultClass} ${ props?.class || '' }`,
-//   ...props
-// })
 
 const getClassWithDefault = (defaultClass: string, props: Props): Props => ({
   ...props,
@@ -35,21 +30,21 @@ const mappedForColClass = (col: string | number) => {
   return getConcatStringBySeparator('col', seperator, col)
 }
 
-export const componentByTypeCurry = _.curry(componentByType)
+export const componentByTypeCurry = curry(componentByType)
 
 export const getDiv = componentByTypeCurry('div')
 
 // @ts-ignore
-export const getRow = (children: Children, props?: Props, parent?: Parent) => getDiv(
+export const getRow = (props = {} as Props,children: Children, parent?: Parent) => getDiv(
+  { ...getClassWithDefault('row', props || {}) },
   children,
   parent,
-  { ...getClassWithDefault('row', props || {}) },
 );
 
 // @ts-ignore
-export const getCol = (children: Children, props? = {}, col?: string | number = '', parent?: Parent) => getDiv(
+export const getCol = (props = {} as Props, children: Children, col?: string | number = '', parent?: Parent) => getDiv(
+  { ...getClassWithDefault(mappedForColClass(col), props) },
   children,
   parent,
-  { ...getClassWithDefault(mappedForColClass(col), props) },
 );
 

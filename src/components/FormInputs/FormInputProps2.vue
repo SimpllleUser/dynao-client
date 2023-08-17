@@ -5,32 +5,43 @@ import UiParserChildren from '../../modules/UIParser/components/UiParserChildren
 
 const components = [
     getRow(
+        {
+            class: 'bg-primary',
+        },
         [
-            getCol([
-                {
-                    id: '1.1',
-                    type: 'q-select',
-                    props: {
-                        model: 'type',
-                        label: 'Type',
-                        options: [
-                            'text',
-                            'password',
-                            'textarea',
-                            'email',
-                            'search',
-                            'tel',
-                            'number',
-                            'url',
-                            'time',
-                            'date',
-                            'datetime-local',
-                        ],
-                        clearable: true,
-                    },
-                },
-            ]),
             getCol(
+                {
+                    class: 'bg-primary',
+                },
+                [
+                    {
+                        id: '1.1',
+                        type: 'q-select',
+                        props: {
+                            model: 'type',
+                            label: 'Type',
+                            options: [
+                                'text',
+                                'password',
+                                'textarea',
+                                'email',
+                                'search',
+                                'tel',
+                                'number',
+                                'url',
+                                'time',
+                                'date',
+                                'datetime-local',
+                            ],
+                            clearable: true,
+                        },
+                    },
+                ],
+            ),
+            getCol(
+                {
+                    class: 'bg-secondary',
+                },
                 [
                     {
                         id: '1.2',
@@ -43,14 +54,8 @@ const components = [
                         },
                     },
                 ],
-                {
-                    class: 'bg-secondary',
-                },
             ),
         ],
-        {
-            class: 'bg-primary',
-        },
     ),
 ]
 
@@ -63,7 +68,7 @@ const value = ref({
 
 <template>
     <div>
-        <ui-parser-children
+        <UiParserChildren
             v-for="component in components"
             :key="component.id"
             v-model="value"
