@@ -5,18 +5,24 @@ import { Children, ComponentTypes, Parent, Props } from '../types'
 export const componentByType = (
   type: ComponentTypes,
   props?: Props,
-children?: Children,
-  parent?: Children,
+  children?: Children,
+  parent?: Children
 ) => ({
   type,
   props: props || {},
   children: children || [],
-  parent: parent || [],
+  parent: parent || []
 })
+
+export const componentFactory = (
+  type: ComponentTypes
+) => (props?: Props,
+      children?: Children,
+      parent?: Children) => componentByType(type, props, children, parent)
 
 const getClassWithDefault = (defaultClass: string, props: Props): Props => ({
   ...props,
-  class: `${defaultClass} ${ props?.class || '' }`,
+  class: `${defaultClass} ${props?.class || ''}`
 })
 
 const getConcatStringBySeparator = (
@@ -32,19 +38,21 @@ const mappedForColClass = (col: string | number) => {
 
 export const componentByTypeCurry = curry(componentByType)
 
-export const getDiv = componentByTypeCurry('div')
+export const getDivFactory = componentByTypeCurry('div')
+
+export const getDiv = componentFactory('div')
 
 // @ts-ignore
-export const getRow = (props = {} as Props,children: Children, parent?: Parent) => getDiv(
+export const getRow = (props = {} as Props, children: Children, parent?: Parent) => getDivFactory(
   { ...getClassWithDefault('row', props || {}) },
   children,
-  parent,
-);
+  parent
+)
 
 // @ts-ignore
-export const getCol = (props = {} as Props, children: Children, col?: string | number = '', parent?: Parent) => getDiv(
+export const getCol = (props = {} as Props, children: Children, col?: string | number = '', parent?: Parent) => getDivFactory(
   { ...getClassWithDefault(mappedForColClass(col), props) },
   children,
-  parent,
-);
+  parent
+)
 
