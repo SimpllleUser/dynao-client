@@ -1,8 +1,8 @@
 
 <script lang='ts' setup>
-// 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio'
+// 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio' 'color-selector' 'icon-selector'
 
-import { UIElementByJson } from 'src/modules/UIParser/types'
+import { InputComponentTypes, UIElementByJson } from 'src/modules/UIParser/types'
 import Condition from 'components/UI/Condition.vue'
 
 interface Props {
@@ -25,7 +25,7 @@ const handleModelUpdate = (newValue: string | number | boolean) => {
 }
 
 const componentSupportsVModel = (type: string) => {
-  const componentsWithVModel = ['q-input', 'q-select', 'q-checkbox', 'q-radio']
+  const componentsWithVModel = Object.values(InputComponentTypes)
   return componentsWithVModel.includes(type)
 }
 

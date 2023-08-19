@@ -5,6 +5,8 @@ export enum InputComponentTypes {
   Select = 'q-select',
   Checkbox = 'q-checkbox',
   Radio = 'q-radio',
+  ColorSelector = 'color-selector',
+  IconSelector = 'icon-selector',
 }
 
 export type BlockComponentTypes =
