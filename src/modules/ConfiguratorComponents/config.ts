@@ -1,7 +1,7 @@
 import { getCol, getRow } from 'src/modules/UIParser/helpers/ui-factories'
 import { InputComponentTypes } from 'src/modules/UIParser/types'
 
-export const commonPropsConfigurator = [
+export const propsConfiguratorInput = [
     getRow({ class: 'w-full' }, [
         getCol({}, [
             {

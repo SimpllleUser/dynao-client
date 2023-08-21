@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { commonPropsConfigurator } from 'src/modules/ConfiguratorComponents/config'
+import { propsConfiguratorInput } from 'src/modules/ConfiguratorComponents/config'
 import UiParserChildren from 'src/modules/UIParser/components/UiParserChildren.vue'
 
 const config = ref({
@@ -15,7 +15,7 @@ const config = ref({
 
 <template>
     <UiParserChildren
-        v-for="(component, index) in commonPropsConfigurator"
+        v-for="(component, index) in propsConfiguratorInput"
         :key="`${component.type}-${index}`"
         v-model="config"
         :component="component"

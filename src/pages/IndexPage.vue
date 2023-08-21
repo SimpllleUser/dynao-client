@@ -15,7 +15,7 @@
 
     <input-property-drawer v-model='showOption' label='Input properties'>
       <div>
-        <ui-parse-v-model v-model='inputConfigurator' :components='commonPropsConfigurator' />
+        <ui-parse-v-model v-model='inputConfigurator' :components='propsConfiguratorInput' />
       </div>
     </input-property-drawer>
   </div>
@@ -25,7 +25,7 @@
 import { ref } from 'vue'
 import { useToggle } from '@vueuse/core'
 import { Vue3JsonEditor } from 'vue3-json-editor'
-import { commonPropsConfigurator } from 'src/modules/ConfiguratorComponents/config'
+import { propsConfiguratorInput } from 'src/modules/ConfiguratorComponents/config'
 import InputPropertyDrawer from 'components/UI/InputPropertyDrawer.vue'
 import UiParseVModel from 'src/modules/UIParser/components/UiParseVModel.vue'
 
