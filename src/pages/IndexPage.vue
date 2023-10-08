@@ -18,7 +18,6 @@
 
     <input-property-drawer v-model='showOption' label='Input properties'>
       <div>
-        {{ activeTypeComponent }}
         <ui-parse-v-model
           v-if="activeTypeComponent === 'q-input'"
           v-model='inputConfigurator'
@@ -29,7 +28,6 @@
           v-model='buttonConfigurator'
           :components='propsConfiguratorButton'
         />
-<!--        <ui-parse-v-model v-model='inputConfigurator' :components='propsConfiguratorInput' />-->
       </div>
     </input-property-drawer>
   </div>

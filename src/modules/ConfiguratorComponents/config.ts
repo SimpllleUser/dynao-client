@@ -1,6 +1,61 @@
 import { getCol, getRow } from 'src/modules/UIParser/helpers/ui-factories'
 import { InputComponentTypes } from 'src/modules/UIParser/types'
 
+
+// const colorVariantSelect = ({
+//                               modelName,
+//                               label,
+//                               placeholder = ''
+//                             }: { modelName: string; label?: string; placeholder?: string }) => getRow({ class: 'w-full' }, [
+//   getCol({}, [
+//     {
+//       type: InputComponentTypes.Select,
+//       props: {
+//         model: modelName,
+//         label,
+//         placeholder,
+//         filled: true,
+//         class: 'full-width',
+//         options: [
+//           'primary',
+//           'secondary',
+//           'accent',
+//           'positive',
+//           'negative',
+//           'info',
+//           'warning',
+//           'dark'
+//         ]
+//       }
+//     }
+//   ])
+// ])
+
+const colorVariantSelect = ({
+                              modelName,
+                              label,
+                              placeholder = ''
+                            }: { modelName: string; label?: string; placeholder?: string }) => ({
+  type: InputComponentTypes.Select,
+  props: {
+    model: modelName,
+    label,
+    placeholder,
+    filled: true,
+    class: 'full-width',
+    options: [
+      'primary',
+      'secondary',
+      'accent',
+      'positive',
+      'negative',
+      'info',
+      'warning',
+      'dark'
+    ]
+  }
+})
+
 const inputLabel = {
   type: InputComponentTypes.Input,
   props: {
@@ -28,16 +83,16 @@ const outline = {
     model: 'outline',
     label: 'Outline'
   }
-};
-const square =  {
+}
+const square = {
   type: InputComponentTypes.Checkbox,
   props: {
     model: 'square',
     label: 'Square'
   }
-};
-const round = {};
-const disabled = {};
+}
+const round = {}
+const disabled = {}
 
 export const propsConfiguratorInput = [
   getRow({ class: 'w-full' }, [
@@ -80,6 +135,8 @@ export const propsConfiguratorInput = [
       }
     }
   ]),
+  colorVariantSelect({ modelName: 'color', label: 'Color' }),
+  colorVariantSelect({ modelName: 'bg-color', label: 'Background color' }),
   getRow({ class: 'w-full q-mt-sm' }, [
     getCol({}, [
       outline
@@ -90,6 +147,15 @@ export const propsConfiguratorInput = [
         props: {
           model: 'dense',
           label: 'Dense'
+        }
+      }
+    ]),
+    getCol({}, [
+      {
+        type: InputComponentTypes.Checkbox,
+        props: {
+          model: 'filled',
+          label: 'Filled'
         }
       }
     ]),
@@ -152,6 +218,8 @@ export const propsConfiguratorInput = [
 
 export const propsConfiguratorButton = [
   getRow({ class: 'w-full q-mb-sm' }, [getCol({}, [inputLabel])]),
+  colorVariantSelect({ modelName: 'color', label: 'Color' }),
+  colorVariantSelect({ modelName: 'text-color', label: 'Text color' }),
   getRow({ class: 'w-full q-mb-sm pb' }, [
     getCol({}, [
       {
@@ -202,7 +270,7 @@ export const propsConfiguratorButton = [
           label: 'Round'
         }
       }
-    ]),
+    ])
   ]),
   getRow({}, [
     getCol({}, [
@@ -220,8 +288,6 @@ export const propsConfiguratorButton = [
     getCol({}, [
       inputColor('Color', 'color')
     ]),
-    getCol({}, [
-
-    ]),
+    getCol({}, [])
   ])
 ]
