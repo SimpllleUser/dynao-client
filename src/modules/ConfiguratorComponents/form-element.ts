@@ -18,16 +18,21 @@ const INPUT_TYPES = [
   'week',
   'color',
 ];
-export const createInputComponent = (model: string, label: string, placeholder: string) => ({
-  type: InputComponentTypes.Input,
-  props: {
-    model,
-    label,
-    placeholder,
-    filled: true,
-    class: 'full-width'
-  }
-})
+
+
+
+export const createInputComponent = (model: string, label: string, placeholder: string) => {
+  return {
+    type: InputComponentTypes.Input,
+    props: {
+      model,
+      label,
+      placeholder,
+      filled: true,
+      class: 'full-width'
+    },
+  };
+}
 
 export const createCheckboxComponent = (model: string, label: string) => ({
   type: InputComponentTypes.Checkbox,
@@ -37,17 +42,30 @@ export const createCheckboxComponent = (model: string, label: string) => ({
   }
 })
 
-export const createSelectComponent = (modelName: string, label: string, placeholder: string = '', props?: any) => ({
-  type: InputComponentTypes.Select,
-  props: {
-    model: modelName,
-    label,
-    placeholder,
-    filled: true,
-    class: 'full-width',
-    ...props,
+export const createSelectComponent = (modelName: string, label: string, placeholder: string = '', props?: any) => {
+
+
+  return {
+    type: InputComponentTypes.Select,
+    props: {
+      model: modelName,
+      label,
+      placeholder,
+      filled: true,
+      'use-input': true,
+      class: 'full-width',
+      ...props,
+    },
+    events: {
+      'filter': (val: any, update: any) => {
+        update(() => {
+          const needle = val.toLowerCase()
+          console.log(needle)
+        })
+      },
+    },
   }
-});
+}
 
 export const createColorSelector = (modelName: string, label: string, placeholder: string = '', props?: any) => {
   return createSelectComponent(modelName, label, placeholder, {

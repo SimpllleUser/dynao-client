@@ -1,64 +1,107 @@
+<!--<script lang='ts' setup>-->
+<!--// 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio' 'color-selector' 'icon-selector'-->
 
-<script lang='ts' setup>
-// 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio' 'color-selector' 'icon-selector'
+<!--import { InputComponentTypes, UIElementByJson } from 'src/modules/UIParser/types'-->
+<!--import Condition from 'components/UI/Condition.vue'-->
 
-import { InputComponentTypes, UIElementByJson } from 'src/modules/UIParser/types'
+<!--interface Props {-->
+<!--  component: UIElementByJson-->
+<!--  modelValue: string | number | boolean-->
+<!--}-->
+
+<!--const props = defineProps<Props>()-->
+
+<!--const emit = defineEmits(['update:modelValue'])-->
+<!--const handleModelUpdate = (newValue: string | number | boolean) => {-->
+<!--  const vModel = props.component.props?.model-->
+<!--    ? {-->
+<!--      ...props?.modelValue,-->
+<!--      [`${props.component.props.model}`]: newValue,-->
+<!--    }-->
+<!--    : newValue-->
+<!--  emit('update:modelValue', vModel)-->
+<!--}-->
+
+<!--const componentSupportsVModel = (type: string) => {-->
+<!--  const componentsWithVModel = Object.values(InputComponentTypes)-->
+<!--  return componentsWithVModel.includes(type)-->
+<!--}-->
+
+<!--</script>-->
+
+<script>
+import {
+    InputComponentTypes,
+    UIElementByJson,
+} from 'src/modules/UIParser/types'
 import Condition from 'components/UI/Condition.vue'
 
-interface Props {
-  component: UIElementByJson
-  modelValue: string | number | boolean
+export default {
+    components: { Condition },
+    props: {
+        component: Object,
+        modelValue: [String, Number, Boolean],
+    },
+    data() {
+        return {
+            modelValue: this.modelValue,
+        }
+    },
+    // computed: {
+    //     componentSupportsVModel() {
+    //         const { type } = this.component
+    //         const componentsWithVModel = Object.values(InputComponentTypes)
+    //         return componentsWithVModel.includes(type)
+    //     },
+    // },
+    methods: {
+        componentSupportsVModel() {
+            const { type } = this.component
+            const componentsWithVModel = Object.values(InputComponentTypes)
+            return componentsWithVModel.includes(type)
+        },
+        handleModelUpdate(newValue) {
+            if (this.component.props && this.component.props.model) {
+                this.modelValue = {
+                    ...this.modelValue,
+                    [this.component.props.model]: newValue,
+                }
+            } else {
+                this.modelValue = newValue
+            }
+            this.$emit('update:modelValue', this.modelValue)
+        },
+    },
 }
-
-const props = defineProps<Props>()
-
-
-const emit = defineEmits(['update:modelValue'])
-const handleModelUpdate = (newValue: string | number | boolean) => {
-  const vModel = props.component.props?.model
-    ? {
-      ...props?.modelValue,
-      [`${props.component.props.model}`]: newValue,
-    }
-    : newValue
-  emit('update:modelValue', vModel)
-}
-
-const componentSupportsVModel = (type: string) => {
-  const componentsWithVModel = Object.values(InputComponentTypes)
-  return componentsWithVModel.includes(type)
-}
-
 </script>
 
 <template>
-  <condition :is-true='component.children'>
-    <component :is='component.type' v-bind='component.props'>
-      <ui-parser-children
-        v-for='(itemChild, key) in component.children'
-        :key='itemChild.id'
-        :component='itemChild'
-        :modelValue='modelValue'
-        @update:modelValue='handleModelUpdate' />
-    </component>
-    <template #else>
-      <component
-        v-if='componentSupportsVModel(component.type)'
-        :is='component.type'
-        v-bind='component.props'
-        :modelValue='modelValue[component.props.model]'
-        @update:modelValue='handleModelUpdate'
-      ></component>
-      <component
-        v-else
-        :is='component.type'
-        v-bind='component.props'
-      ></component>
-    </template>
-  </condition>
+    <condition :is-true="component.children">
+        <component :is="component.type" v-bind="component.props">
+            <ui-parser-children
+                v-for="(itemChild, key) in component.children"
+                :key="itemChild.id"
+                :component="itemChild"
+                :model-value="modelValue"
+                @update:modelValue="handleModelUpdate"
+            />
+        </component>
+        <template #else>
+            <component
+                :is="component.type"
+                v-if="componentSupportsVModel(component.type)"
+                v-bind="component.props"
+                :model-value="modelValue[component.props.model]"
+                @update:modelValue="handleModelUpdate"
+                v-on="component.events"
+            ></component>
+            <component
+                :is="component.type"
+                v-else
+                v-bind="component.props"
+            ></component>
+        </template>
+    </condition>
 </template>
 
-
-<style scoped>
-
-</style>
+<style scoped></style>
