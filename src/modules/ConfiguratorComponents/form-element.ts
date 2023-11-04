@@ -1,5 +1,21 @@
 import { InputComponentTypes } from 'src/modules/UIParser/types'
 import iconsSource from '../../boot/icon-names'
+import { filterTextItemsByText } from 'src/modules/ConfiguratorComponents/helpers'
+
+export type ComponentClass = string | Record<string, boolean>
+export interface InputComponentProps {
+  model?: unknown
+  label?: string
+  placeholder?: string
+  filled?: boolean
+  class?: string | Array<ComponentClass>
+}
+
+interface InputComponentConfig {
+  type: InputComponentTypes;
+  props?: InputComponentProps;
+  events?: (context: any) => Record<string, Function>
+}
 
 const COLOR_VARIANTS = ['primary', 'secondary', 'accent', 'positive', 'negative', 'info', 'warning', 'dark']
 
@@ -21,7 +37,7 @@ const INPUT_TYPES = [
 
 
 
-export const createInputComponent = (model: string, label: string, placeholder: string) => {
+export const Input = (model: string, label: string, placeholder: string): InputComponentConfig => {
   return {
     type: InputComponentTypes.Input,
     props: {
@@ -34,7 +50,7 @@ export const createInputComponent = (model: string, label: string, placeholder: 
   };
 }
 
-export const createCheckboxComponent = (model: string, label: string) => ({
+export const Checkbox = (model: string, label: string): InputComponentConfig => ({
   type: InputComponentTypes.Checkbox,
   props: {
     model,
@@ -42,7 +58,7 @@ export const createCheckboxComponent = (model: string, label: string) => ({
   }
 })
 
-export const createSelectComponent = (modelName: string, label: string, placeholder: string = '', props?: any) => {
+export const Select = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
 
 
   return {
@@ -60,7 +76,7 @@ export const createSelectComponent = (modelName: string, label: string, placehol
       filter: (val: any, update: any) => {
         update(() => {
           _this.vData.options = val.trim().length
-            ? _this.vData.options.filter((item: string) => item.toLowerCase().includes(val.trim().toLowerCase()))
+            ? filterTextItemsByText(_this.vData.options, val)
             : props.options
         })
       },
@@ -68,33 +84,34 @@ export const createSelectComponent = (modelName: string, label: string, placehol
   }
 }
 
-export const createColorSelector = (modelName: string, label: string, placeholder: string = '', props?: any) => {
-  return createSelectComponent(modelName, label, placeholder, {
+export const ColorSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
+  return Select(modelName, label, placeholder, {
     ...props,
     options: COLOR_VARIANTS,
   });
 };
 
-export const createInputTypesSelector = (modelName: string, label: string, placeholder: string = '', props?: any) => {
-  return createSelectComponent(modelName, label, placeholder, {
+export const InputTypesSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
+  return Select(modelName, label, placeholder, {
     options: INPUT_TYPES,
     ...props,
   });
 };
 
-export const createIconsSelector = (modelName: string, label: string, placeholder: string = '', props?: any) => {
-  return createSelectComponent(modelName, label, placeholder, {
+export const IconsSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
+  return Select(modelName, label, placeholder, {
     options: iconsSource,
     virtualScrollSliceSize: 25,
     useInput: true,
-    events: {
-      // filter: () => (val, update) => {
-      //   update(() => {
-      //     const needle = val.toLowerCase()
-      //     icons.value = iconsSource.filter(v => v.toLowerCase().indexOf(needle) > -1)
-      //   })
-      // }
-    },
+    events: (_this: any) => ({
+      filter: (val: any, update: any) => {
+        update(() => {
+          _this.vData.options = val.trim().length
+            ? filterTextItemsByText(_this.vData.options, val)
+            : props.options
+        })
+      },
+    }),
     ...props,
   });
 };

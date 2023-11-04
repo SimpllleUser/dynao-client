@@ -1,40 +1,38 @@
-<script lang='ts' setup>
-
-// 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio'
-
+<script setup lang="ts">
 import { computed } from 'vue'
-import { ComponentTypes, UIElementByJson } from 'src/modules/UIParser/types'
-import UiParserParent from 'src/modules/UIParser/components/UiPareserParent.vue'
-import UiParserChildren from 'src/modules/UIParser/components/UiParserChildren.vue'
+import { UIElementByJson } from 'src/modules/UIParser/types'
+import Condition from 'components/UI/Condition.vue'
+import UiParserNested from 'src/modules/UIParser/components/UiParserNested.vue'
 
-interface Props {
-  elements: Array<UIElementByJson>
+interface Emits {
+  (event:'update:modelValue', payload: any): void
 }
 
-const props = defineProps<Props>()
+const props = defineProps<{
+  modelValue: any,
+  components: Array<UIElementByJson>
+}>()
 
-const getComponentNameByType = (type: ComponentTypes): string => `q-${type}`
+const emits = defineEmits<Emits>()
 
-const components = computed(() => props.elements.map((element) => ({
-  ...element,
-  name: element.type
-})))
+const data = computed({
+  get: () => props.modelValue,
+  set: (value: any) => {
+    emits('update:modelValue', { ...props.modelValue, ...value })
+  }
+})
 
 </script>
 
 <template>
-  <div>
-    <div v-for='(component, index) in components' :key='index'>
-      <div v-if='component.parent'>
-        <ui-parser-parent :component='component.parent'>
-          <component :is='component.name' v-bind='component.props' v-on='component.events'>
-           <ui-parser-children v-if='component.children' :component='component.children' />
-          </component>
-        </ui-parser-parent>
-      </div>
-      <component v-else :is='component.name' v-bind='component.props' v-on='component.events' />
-    </div>
-  </div>
+  <condition is-true='components.length'>
+    <ui-parser-nested
+        v-for="(component, index) in components"
+        :key="`${component.type}-${index}`"
+        v-model="data"
+        :component="component"
+    />
+  </condition>
 </template>
 
 <style scoped></style>

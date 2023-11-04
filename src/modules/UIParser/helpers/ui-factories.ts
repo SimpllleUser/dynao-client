@@ -2,6 +2,18 @@ import { curry } from 'lodash'
 
 import { Children, ComponentTypes, Parent, Props } from '../types'
 
+interface Component  {
+  type: ComponentTypes;
+  props: Props;
+  children: Children;
+  parent: Parent;
+};
+
+type ComponentFactory = (
+  props?: Props,
+  children?: Children,
+  parent?: Parent
+) => Component;
 export const componentByType = (
   type: ComponentTypes,
   props?: Props,
@@ -31,26 +43,26 @@ const getConcatStringBySeparator = (
   endString?: string | number
 ): string => `${startString}${seperator}${endString || ''}`
 
-const mappedForColClass = (col: string | number) => {
+const mappedForColClass = (col?: string | number) => {
   const seperator = col ? '-' : ''
   return getConcatStringBySeparator('col', seperator, col)
 }
 
-export const componentByTypeCurry = curry(componentByType)
+export const componentByTypeCurry = curry(componentByType) as (
+  type: ComponentTypes
+) => ComponentFactory;
 
-export const getDivFactory = componentByTypeCurry('div')
+export const getDivFactory = componentByTypeCurry('div') as ComponentFactory;
 
-export const getDiv = componentFactory('div')
+export const Div = componentFactory('div')
 
-// @ts-ignore
-export const getRow = (props = {} as Props, children: Children, parent?: Parent) => getDivFactory(
+export const Row = (props = {} as Props, children: Children, parent?: Parent) => Div(
   { ...getClassWithDefault('row', props || {}) },
   children,
   parent
 )
 
-// @ts-ignore
-export const getCol = (props = {} as Props, children: Children, col?: string | number = '', parent?: Parent) => getDivFactory(
+export const Col = (props = {} as Props, children: Children, col?: string | number, parent?: Parent) => getDivFactory(
   { ...getClassWithDefault(mappedForColClass(col), props) },
   children,
   parent

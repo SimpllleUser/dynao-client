@@ -18,12 +18,12 @@
 
     <input-property-drawer v-model='showOption' label='Input properties'>
       <div>
-        <ui-parse-v-model
+        <ui-parser
           v-if="activeTypeComponent === 'q-input'"
           v-model='inputConfigurator'
           :components='propsConfiguratorInput'
         />
-        <ui-parse-v-model
+        <ui-parser
           v-if="activeTypeComponent === 'q-btn'"
           v-model='buttonConfigurator'
           :components='propsConfiguratorButton'
@@ -37,10 +37,10 @@
 import { Ref, ref } from 'vue'
 import { useToggle } from '@vueuse/core'
 import { Vue3JsonEditor } from 'vue3-json-editor'
+import { Nullable } from 'boot/types'
 import { propsConfiguratorInput, propsConfiguratorButton } from 'src/modules/ConfiguratorComponents/config'
 import InputPropertyDrawer from 'components/UI/InputPropertyDrawer.vue'
-import UiParseVModel from 'src/modules/UIParser/components/UiParseVModel.vue'
-import { Nullable } from 'boot/types'
+import UiParser from 'src/modules/UIParser/components/UiParser.vue'
 
 
 const entity = ref('')

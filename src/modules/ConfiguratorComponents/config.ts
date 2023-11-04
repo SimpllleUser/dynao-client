@@ -1,59 +1,54 @@
-import { getCol, getRow } from 'src/modules/UIParser/helpers/ui-factories'
+import { Col, Row } from 'src/modules/UIParser/helpers/ui-factories'
 import { InputComponentTypes } from 'src/modules/UIParser/types'
 import {
-    createInputComponent,
-    createColorSelector,
-    createCheckboxComponent,
-    createSelectComponent,
-    createInputTypesSelector,
-    createIconsSelector,
+    Input,
+    ColorSelector,
+    Checkbox,
+    Select,
+    InputTypesSelector,
+    IconsSelector,
 } from 'src/modules/ConfiguratorComponents/form-element'
 
 export const propsConfiguratorInput = [
-    getRow({ class: 'w-full' }, [
-        createInputTypesSelector('type', 'Type', 'Type input'),
-        createInputComponent('label', 'Label', 'Input label'),
+    Row({ class: 'w-full' }, [
+        InputTypesSelector('type', 'Type', 'Type input'),
+        Input('label', 'Label', 'Input label'),
     ]),
-    getRow({ class: 'w-full q-pt-sm' }, [
-        createInputComponent('placeholder', 'Placeholder', 'Input placeholder'),
+    Row({ class: 'w-full q-pt-sm' }, [
+        Input('placeholder', 'Placeholder', 'Input placeholder'),
     ]),
-    getRow({ class: 'w-full q-mt-sm' }, [
-        createColorSelector('color', 'Color'),
-        createColorSelector('bg-color', 'Background color'),
+    Row({ class: 'w-full q-mt-sm' }, [
+        ColorSelector('color', 'Color'),
+        ColorSelector('bg-color', 'Background color'),
     ]),
-    getRow({ class: 'w-full q-mt-sm' }, [
-        createCheckboxComponent('outline', 'Outline'),
-        createCheckboxComponent('dense', 'Dense'),
-        createCheckboxComponent('filled', 'Filled'),
-        createCheckboxComponent('disabled', 'Disabled'),
-        createCheckboxComponent('clearable', 'Clearable'),
+    Row({ class: 'w-full q-mt-sm' }, [
+        Checkbox('outline', 'Outline'),
+        Checkbox('dense', 'Dense'),
+        Checkbox('filled', 'Filled'),
+        Checkbox('disabled', 'Disabled'),
+        Checkbox('clearable', 'Clearable'),
     ]),
-    getRow({ class: 'w-full q-mt-sm' }, [
-        createCheckboxComponent('standout', 'Standout'),
-        createCheckboxComponent('square', 'Square'),
-        createCheckboxComponent('rounded', 'Rounded'),
-        createCheckboxComponent('borderless', 'Borderless'),
+    Row({ class: 'w-full q-mt-sm' }, [
+        Checkbox('standout', 'Standout'),
+        Checkbox('square', 'Square'),
+        Checkbox('rounded', 'Rounded'),
+        Checkbox('borderless', 'Borderless'),
     ]),
 ]
 
 export const propsConfiguratorButton = [
-    getRow({ class: 'w-full q-mb-sm' }, [
-        createInputComponent('label', 'Label', 'Input label'),
+    Row({ class: 'w-full q-mb-sm' }, [Input('label', 'Label', 'Input label')]),
+    ColorSelector('color', 'Color'),
+    ColorSelector('text-color', 'Text color'),
+    Row({ class: 'w-full q-mb-sm pb' }, [
+        IconsSelector('icon', 'Icon', 'Input icon'),
+        IconsSelector('icon-right', 'Icon right', 'Input icon right'),
     ]),
-    createColorSelector('color', 'Color'),
-    createColorSelector('text-color', 'Text color'),
-    getRow({ class: 'w-full q-mb-sm pb' }, [
-        createIconsSelector('icon', 'Icon', 'Input icon'),
-        createIconsSelector('icon-right', 'Icon right', 'Input icon right'),
+    Row({ class: 'w-full q-mb-sm' }, [
+        Checkbox('round', 'Round'),
+        Checkbox('flat', 'Flat'),
+        Checkbox('outline', 'Outline'),
+        Checkbox('round', 'Round'),
     ]),
-    getRow({ class: 'w-full q-mb-sm' }, [
-        createCheckboxComponent('round', 'Round'),
-        createCheckboxComponent('flat', 'Flat'),
-        createCheckboxComponent('outline', 'Outline'),
-        createCheckboxComponent('round', 'Round'),
-    ]),
-    getRow({}, [
-        createCheckboxComponent('square', 'Square'),
-        createCheckboxComponent('no-caps', 'No-caps'),
-    ]),
+    Row({}, [Checkbox('square', 'Square'), Checkbox('no-caps', 'No-caps')]),
 ]
