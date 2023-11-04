@@ -3,15 +3,24 @@ import UiParserChildren from 'src/modules/UIParser/components/UiParserChildren.v
 import { useVModel } from '@vueuse/core'
 import { UIElementByJson } from 'src/modules/UIParser/types'
 import Condition from 'components/UI/Condition.vue'
+import { computed } from 'vue'
+import { emit } from 'cluster'
+
+interface Emits {
+  (event:'update:modelValue', payload: any): void
+}
 
 const props = defineProps<{
   modelValue: any,
   components: Array<UIElementByJson>
 }>()
 
-const emit = defineEmits(['update:modelValue'])
+const emits = defineEmits<Emits>()
 
-const data = useVModel(props, 'modelValue', emit)
+const data = computed({
+  get: () => props.modelValue,
+  set: (value: any) => { emits('update:modelValue', { ...props.modelValue, ...value }) }
+})
 
 </script>
 

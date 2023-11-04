@@ -44,7 +44,7 @@ export default {
     },
     data() {
         return {
-            modelValue: this.modelValue,
+            modelValueData: this.modelValue,
         }
     },
     // computed: {
@@ -62,14 +62,14 @@ export default {
         },
         handleModelUpdate(newValue) {
             if (this.component.props && this.component.props.model) {
-                this.modelValue = {
-                    ...this.modelValue,
+                this.modelValueData = {
+                    ...this.modelValueData,
                     [this.component.props.model]: newValue,
                 }
             } else {
-                this.modelValue = newValue
+                this.modelValueData = newValue
             }
-            this.$emit('update:modelValue', this.modelValue)
+            this.$emit('update:modelValue', this.modelValueData)
         },
     },
 }
@@ -82,7 +82,7 @@ export default {
                 v-for="(itemChild, key) in component.children"
                 :key="itemChild.id"
                 :component="itemChild"
-                :model-value="modelValue"
+                :model-value="modelValueData"
                 @update:modelValue="handleModelUpdate"
             />
         </component>
@@ -91,7 +91,7 @@ export default {
                 :is="component.type"
                 v-if="componentSupportsVModel(component.type)"
                 v-bind="component.props"
-                :model-value="modelValue[component.props.model]"
+                :model-value="modelValueData[component.props.model]"
                 @update:modelValue="handleModelUpdate"
                 v-on="component.events"
             ></component>
