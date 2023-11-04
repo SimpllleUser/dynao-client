@@ -43,17 +43,20 @@ export default {
         modelValue: [String, Number, Boolean],
     },
     data() {
+        const vEvents = this.component?.events
+            ? this.component?.events(this)
+            : {}
         return {
             modelValueData: this.modelValue,
+            vData: this.component.props,
+            vEvents,
         }
     },
-    // computed: {
-    //     componentSupportsVModel() {
-    //         const { type } = this.component
-    //         const componentsWithVModel = Object.values(InputComponentTypes)
-    //         return componentsWithVModel.includes(type)
-    //     },
-    // },
+    computed: {
+        vBind() {
+            return { ...this.component.props, ...this.vData }
+        },
+    },
     methods: {
         componentSupportsVModel() {
             const { type } = this.component
@@ -90,10 +93,10 @@ export default {
             <component
                 :is="component.type"
                 v-if="componentSupportsVModel(component.type)"
-                v-bind="component.props"
+                v-bind="vBind"
                 :model-value="modelValueData[component.props.model]"
                 @update:modelValue="handleModelUpdate"
-                v-on="component.events"
+                v-on="vEvents"
             ></component>
             <component
                 :is="component.type"

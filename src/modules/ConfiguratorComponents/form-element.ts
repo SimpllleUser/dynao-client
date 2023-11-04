@@ -56,14 +56,15 @@ export const createSelectComponent = (modelName: string, label: string, placehol
       class: 'full-width',
       ...props,
     },
-    events: {
-      'filter': (val: any, update: any) => {
+    events: (_this: any) => ({
+      filter: (val: any, update: any) => {
         update(() => {
-          const needle = val.toLowerCase()
-          console.log(needle)
+          _this.vData.options = val.trim().length
+            ? _this.vData.options.filter((item: string) => item.toLowerCase().includes(val.trim().toLowerCase()))
+            : props.options
         })
       },
-    },
+    }),
   }
 }
 
