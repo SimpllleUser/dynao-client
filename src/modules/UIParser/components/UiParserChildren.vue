@@ -43,17 +43,20 @@ export default {
         modelValue: [String, Number, Boolean],
     },
     data() {
+        const vEvents = this.component?.events
+            ? this.component?.events(this)
+            : {}
         return {
-            modelValue: this.modelValue,
+            modelValueData: this.modelValue,
+            vData: this.component.props,
+            vEvents,
         }
     },
-    // computed: {
-    //     componentSupportsVModel() {
-    //         const { type } = this.component
-    //         const componentsWithVModel = Object.values(InputComponentTypes)
-    //         return componentsWithVModel.includes(type)
-    //     },
-    // },
+    computed: {
+        vBind() {
+            return { ...this.component.props, ...this.vData }
+        },
+    },
     methods: {
         componentSupportsVModel() {
             const { type } = this.component
@@ -62,14 +65,14 @@ export default {
         },
         handleModelUpdate(newValue) {
             if (this.component.props && this.component.props.model) {
-                this.modelValue = {
-                    ...this.modelValue,
+                this.modelValueData = {
+                    ...this.modelValueData,
                     [this.component.props.model]: newValue,
                 }
             } else {
-                this.modelValue = newValue
+                this.modelValueData = newValue
             }
-            this.$emit('update:modelValue', this.modelValue)
+            this.$emit('update:modelValue', this.modelValueData)
         },
     },
 }
@@ -82,7 +85,7 @@ export default {
                 v-for="(itemChild, key) in component.children"
                 :key="itemChild.id"
                 :component="itemChild"
-                :model-value="modelValue"
+                :model-value="modelValueData"
                 @update:modelValue="handleModelUpdate"
             />
         </component>
@@ -90,10 +93,10 @@ export default {
             <component
                 :is="component.type"
                 v-if="componentSupportsVModel(component.type)"
-                v-bind="component.props"
-                :model-value="modelValue[component.props.model]"
+                v-bind="vBind"
+                :model-value="modelValueData[component.props.model]"
                 @update:modelValue="handleModelUpdate"
-                v-on="component.events"
+                v-on="vEvents"
             ></component>
             <component
                 :is="component.type"
