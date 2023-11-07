@@ -28,6 +28,7 @@
           v-model='buttonConfigurator'
           :components='propsConfiguratorButton'
         />
+        {{ inputConfigurator }}
       </div>
     </input-property-drawer>
   </div>
@@ -51,7 +52,9 @@ const handleChange = (value: JSON) => {
   entity.value = value
 }
 
-const inputConfigurator = ref({})
+const inputConfigurator = ref({
+
+})
 const buttonConfigurator = ref({})
 
 const activeTypeComponent: Ref<Nullable<any>> = ref(null)

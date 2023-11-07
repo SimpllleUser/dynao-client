@@ -37,7 +37,7 @@ const INPUT_TYPES = [
 
 
 
-export const Input = (model: string, label: string, placeholder: string): InputComponentConfig => {
+export const Input = (model: any, label: string, placeholder: string): InputComponentConfig => {
   return {
     type: InputComponentTypes.Input,
     props: {

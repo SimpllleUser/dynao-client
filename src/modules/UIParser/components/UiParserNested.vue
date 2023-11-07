@@ -1,5 +1,6 @@
 <script>
 // <!-- 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio' 'color-selector' 'icon-selector'-->
+import { get } from 'lodash'
 
 import {
     InputComponentTypes,
@@ -7,6 +8,17 @@ import {
 } from 'src/modules/UIParser/types'
 import Condition from 'components/UI/Condition.vue'
 
+function setNestedValue(obj, keys, value) {
+    if (keys.length === 1) {
+        obj[keys[0]] = value
+    } else {
+        const key = keys[0]
+        if (!obj[key]) {
+            obj[key] = {}
+        }
+        setNestedValue(obj[key], keys.slice(1), value)
+    }
+}
 export default {
     components: { Condition },
     props: {
@@ -29,6 +41,9 @@ export default {
         },
     },
     methods: {
+        getModelValue(valuePath = '') {
+            return get(this.modelValueData, this.component.props.model)
+        },
         componentSupportsVModel() {
             const { type } = this.component
             const componentsWithVModel = Object.values(InputComponentTypes)
@@ -36,10 +51,8 @@ export default {
         },
         handleModelUpdate(newValue) {
             if (this.component.props && this.component.props.model) {
-                this.modelValueData = {
-                    ...this.modelValueData,
-                    [this.component.props.model]: newValue,
-                }
+                const keys = this.component.props.model.split('.')
+                setNestedValue(this.modelValueData, keys, newValue)
             } else {
                 this.modelValueData = newValue
             }
@@ -65,7 +78,7 @@ export default {
                 :is="component.type"
                 v-if="componentSupportsVModel(component.type)"
                 v-bind="vBind"
-                :model-value="modelValueData[component.props.model]"
+                :model-value="getModelValue(component.props.model)"
                 @update:modelValue="handleModelUpdate"
                 v-on="vEvents"
             ></component>
