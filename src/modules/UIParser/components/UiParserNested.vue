@@ -7,6 +7,7 @@ import {
     UIElementByJson,
 } from 'src/modules/UIParser/types'
 import Condition from 'components/UI/Condition.vue'
+import UiParser from 'src/modules/UIParser/components/UiParser.vue'
 
 function setNestedValue(obj, keys, value) {
     if (keys.length === 1) {
@@ -24,6 +25,7 @@ export default {
     props: {
         component: Object,
         modelValue: [String, Number, Boolean],
+        slots: Array,
     },
     data() {
         const vEvents = this.component?.events
@@ -71,7 +73,9 @@ export default {
                 :component="itemChild"
                 :model-value="modelValueData"
                 @update:modelValue="handleModelUpdate"
-            />
+            >
+              <!--Додати відображення body (text ...)-->
+            </ui-parser-nested>
         </component>
         <template #else>
             <component
@@ -81,12 +85,34 @@ export default {
                 :model-value="getModelValue(component.props.model)"
                 @update:modelValue="handleModelUpdate"
                 v-on="vEvents"
-            ></component>
-            <component
-                :is="component.type"
-                v-else
-                v-bind="component.props"
-            ></component>
+            >
+                <template
+                    v-for="slot in component.slots"
+                    :key="slot.name"
+                    #[slot.name]="item"
+                >
+                  <!--Видалені елементи data bind
+                  Необідно автоматизувати при'язку дані між компонентами
+                  з указанням рівня вкладеності там передачі на найвищий елемент
+                  Просто указувати який об'єкт прив'язується до якого компоненту-->
+                    <ui-parser-nested
+                        v-for="(slotBody, slotKey) in slot.body"
+                        :key="slotKey"
+                        :model-value="slotBody.props.model"
+                        :component="slotBody"
+                    />
+                </template>
+            </component>
+            <component :is="component.type" v-else v-bind="component.props">
+                <template
+                    v-for="slot in component.slots"
+                    :key="slot.name"
+                    #[slot.name]="item"
+                >
+                    {{ slot.body }}
+                    <ui-parser :components="slot.body" />
+                </template>
+            </component>
         </template>
     </condition>
 </template>

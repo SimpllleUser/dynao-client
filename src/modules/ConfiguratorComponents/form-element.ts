@@ -1,8 +1,10 @@
 import { InputComponentTypes } from 'src/modules/UIParser/types'
 import iconsSource from '../../boot/icon-names'
 import { filterTextItemsByText } from 'src/modules/ConfiguratorComponents/helpers'
+import { Slots } from 'src/modules/UIParser/helpers/ui-factories'
 
 export type ComponentClass = string | Record<string, boolean>
+
 export interface InputComponentProps {
   model?: unknown
   label?: string
@@ -15,6 +17,7 @@ interface InputComponentConfig {
   type: InputComponentTypes;
   props?: InputComponentProps;
   events?: (context: any) => Record<string, Function>
+  slots?: any,
 }
 
 const COLOR_VARIANTS = ['primary', 'secondary', 'accent', 'positive', 'negative', 'info', 'warning', 'dark']
@@ -32,12 +35,11 @@ const INPUT_TYPES = [
   'datetime-local',
   'month',
   'week',
-  'color',
-];
+  'color'
+]
 
 
-
-export const Input = (model: any, label: string, placeholder: string): InputComponentConfig => {
+export const Input = (model: any, label: string, placeholder: string, slots?: Slots): InputComponentConfig => {
   return {
     type: InputComponentTypes.Input,
     props: {
@@ -47,7 +49,8 @@ export const Input = (model: any, label: string, placeholder: string): InputComp
       filled: true,
       class: 'full-width'
     },
-  };
+    slots
+  }
 }
 
 export const Checkbox = (model: string, label: string): InputComponentConfig => ({
@@ -59,8 +62,6 @@ export const Checkbox = (model: string, label: string): InputComponentConfig => 
 })
 
 export const Select = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
-
-
   return {
     type: InputComponentTypes.Select,
     props: {
@@ -70,7 +71,7 @@ export const Select = (modelName: string, label: string, placeholder: string = '
       filled: true,
       'use-input': true,
       class: 'full-width',
-      ...props,
+      ...props
     },
     events: (_this: any) => ({
       filter: (val: any, update: any) => {
@@ -79,24 +80,24 @@ export const Select = (modelName: string, label: string, placeholder: string = '
             ? filterTextItemsByText(_this.vData.options, val)
             : props.options
         })
-      },
-    }),
+      }
+    })
   }
 }
 
 export const ColorSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
   return Select(modelName, label, placeholder, {
     ...props,
-    options: COLOR_VARIANTS,
-  });
-};
+    options: COLOR_VARIANTS
+  })
+}
 
 export const InputTypesSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
   return Select(modelName, label, placeholder, {
     options: INPUT_TYPES,
-    ...props,
-  });
-};
+    ...props
+  })
+}
 
 export const IconsSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
   return Select(modelName, label, placeholder, {
@@ -110,8 +111,8 @@ export const IconsSelector = (modelName: string, label: string, placeholder: str
             ? filterTextItemsByText(_this.vData.options, val)
             : props.options
         })
-      },
+      }
     }),
-    ...props,
-  });
-};
+    ...props
+  })
+}

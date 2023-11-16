@@ -12,7 +12,12 @@ import {
 export const propsConfiguratorInput = [
     Row({ class: 'w-full' }, [
         InputTypesSelector('type', 'Type', 'Type input'),
-        Input('label', 'Label', 'Input label'),
+        Input('label', 'Label', 'Input label', [
+            {
+                name: 'append',
+                body: [Checkbox('Some', 'Outline')],
+            },
+        ]),
     ]),
     Row({ class: 'w-full q-pt-sm' }, [
         Input('placeholder', 'Placeholder', 'Input placeholder'),

@@ -9,6 +9,8 @@ interface Component  {
   parent: Parent;
 };
 
+export type Slots = Array<{ name: string; body: any }>
+
 type ComponentFactory = (
   props?: Props,
   children?: Children,
