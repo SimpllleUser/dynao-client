@@ -1,19 +1,20 @@
 <template>
   <div>
     <div class='row'>
-      <div class='col-8'>
+      <div class='col-4'>
         <component :is="'q-input'" v-model='entity' v-bind='inputConfigurator'
                    @click="setActiveTypeComponent('q-input')" />
         <component :is="'q-btn'" v-model='entity' v-bind='buttonConfigurator'
                    @click="setActiveTypeComponent('q-btn')" />
       </div>
-      <div class='col-4'>
-        <div><b>Source entity</b></div>
-        <hr>
-        <Vue3JsonEditor
-          @json-change='handleChange'
-        />
-      </div>
+<!--      <div class='col-8'>-->
+<!--        <div><b>Source entity</b></div>-->
+<!--        <hr>-->
+<!--        <Vue3JsonEditor-->
+<!--          :model-value='propsConfiguratorInput'-->
+<!--          @json-change='handleChange'-->
+<!--        />-->
+<!--      </div>-->
     </div>
 
     <input-property-drawer v-model='showOption' label='Input properties'>

@@ -74,7 +74,7 @@ export default {
                 :model-value="modelValueData"
                 @update:modelValue="handleModelUpdate"
             >
-              <!--Додати відображення body (text ...)-->
+                <!--Додати відображення body (text ...)-->
             </ui-parser-nested>
         </component>
         <template #else>
@@ -91,7 +91,7 @@ export default {
                     :key="slot.name"
                     #[slot.name]="item"
                 >
-                  <!--Видалені елементи data bind
+                    <!--Видалені елементи data bind
                   Необідно автоматизувати при'язку дані між компонентами
                   з указанням рівня вкладеності там передачі на найвищий елемент
                   Просто указувати який об'єкт прив'язується до якого компоненту-->

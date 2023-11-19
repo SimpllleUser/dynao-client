@@ -11,20 +11,30 @@ import {
 
 export const propsConfiguratorInput = [
     Row({ class: 'w-full' }, [
-        InputTypesSelector('type', 'Type', 'Type input'),
-        Input('label', 'Label', 'Input label', [
-            {
-                name: 'append',
-                body: [Checkbox('Some', 'Outline')],
-            },
-        ]),
+        InputTypesSelector('type', {
+            label: 'Type',
+            placeholder: 'Type input',
+        }),
+        Input('label', {
+            label: 'Label',
+            placeholder: 'Input label',
+            slots: [
+                {
+                    name: 'append',
+                    body: [Checkbox('Some', 'Outline')],
+                },
+            ],
+        }),
     ]),
     Row({ class: 'w-full q-pt-sm' }, [
-        Input('placeholder', 'Placeholder', 'Input placeholder'),
+        Input('placeholder', {
+            label: 'Placeholder',
+            placeholder: 'Input placeholder',
+        }),
     ]),
     Row({ class: 'w-full q-mt-sm' }, [
-        ColorSelector('color', 'Color'),
-        ColorSelector('bg-color', 'Background color'),
+        ColorSelector('color', { label: 'Color' }),
+        ColorSelector('bg-color', { label: 'Background color',  }),
     ]),
     Row({ class: 'w-full q-mt-sm' }, [
         Checkbox('outline', 'Outline'),
@@ -42,12 +52,17 @@ export const propsConfiguratorInput = [
 ]
 
 export const propsConfiguratorButton = [
-    Row({ class: 'w-full q-mb-sm' }, [Input('label', 'Label', 'Input label')]),
-    ColorSelector('color', 'Color'),
-    ColorSelector('text-color', 'Text color'),
+    Row({ class: 'w-full q-mb-sm' }, [
+        Input('label', { label: 'Label', placeholder: 'Input label' }),
+    ]),
+    ColorSelector('color', { label: 'Color' }),
+    ColorSelector('text-color', { label: 'Text color' }),
     Row({ class: 'w-full q-mb-sm pb' }, [
-        IconsSelector('icon', 'Icon', 'Input icon'),
-        IconsSelector('icon-right', 'Icon right', 'Input icon right'),
+        IconsSelector('icon', { label: 'Icon', placeholder: 'Input icon' }),
+        IconsSelector('icon-right', {
+            label: 'Icon right',
+            placeholder: 'Input icon right',
+        }),
     ]),
     Row({ class: 'w-full q-mb-sm' }, [
         Checkbox('round', 'Round'),

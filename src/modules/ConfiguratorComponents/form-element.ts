@@ -1,118 +1,137 @@
-import { InputComponentTypes } from 'src/modules/UIParser/types'
-import iconsSource from '../../boot/icon-names'
-import { filterTextItemsByText } from 'src/modules/ConfiguratorComponents/helpers'
-import { Slots } from 'src/modules/UIParser/helpers/ui-factories'
+import { InputComponentTypes } from 'src/modules/UIParser/types';
+import { filterTextItemsByText } from 'src/modules/ConfiguratorComponents/helpers';
+import { Slots } from 'src/modules/UIParser/helpers/ui-factories';
+import ICONS_SOURCE from '../../boot/icon-names';
 
-export type ComponentClass = string | Record<string, boolean>
+export type ComponentClass = string | Record<string, boolean>;
 
 export interface InputComponentProps {
-  model?: unknown
-  label?: string
-  placeholder?: string
-  filled?: boolean
-  class?: string | Array<ComponentClass>
+  model?: unknown;
+  label?: string;
+  placeholder?: string;
+  filled?: boolean;
+  class?: string | Array<ComponentClass>;
 }
 
 interface InputComponentConfig {
   type: InputComponentTypes;
   props?: InputComponentProps;
-  events?: (context: any) => Record<string, Function>
-  slots?: any,
+  events?: (context: any) => Record<string, Function>;
+  slots?: any;
 }
 
-const COLOR_VARIANTS = ['primary', 'secondary', 'accent', 'positive', 'negative', 'info', 'warning', 'dark']
+interface ComponentConfig {
+  label?: string, placeholder?: string, props?: any, slots?: Slots
+}
+
+const COLOR_VARIANTS = ['primary', 'secondary', 'accent', 'positive', 'negative', 'info', 'warning', 'dark'];
 
 const INPUT_TYPES = [
-  'text',
-  'password',
-  'number',
-  'email',
-  'search',
-  'tel',
-  'url',
-  'date',
-  'time',
-  'datetime-local',
-  'month',
-  'week',
-  'color'
-]
+  'text', 'password', 'number', 'email', 'search', 'tel', 'url', 'date',
+  'time', 'datetime-local', 'month', 'week', 'color'
+];
 
+const VIRTUAL_SCROLL_SIZE = 25
 
-export const Input = (model: any, label: string, placeholder: string, slots?: Slots): InputComponentConfig => {
+const createBaseConfig = (type: InputComponentTypes, model: any, config?: ComponentConfig): InputComponentConfig => {
   return {
-    type: InputComponentTypes.Input,
+    type,
     props: {
       model,
-      label,
-      placeholder,
+      label: config?.label || '',
+      placeholder: config?.placeholder || '',
       filled: true,
       class: 'full-width'
     },
-    slots
-  }
-}
+    slots: config?.slots
+  };
+};
 
-export const Checkbox = (model: string, label: string): InputComponentConfig => ({
+export const Input = (model: any, config?: ComponentConfig): InputComponentConfig => {
+  return createBaseConfig(InputComponentTypes.Input, model, config);
+};
+
+export const Checkbox = (model: string, label: string, slots?: Slots): InputComponentConfig => ({
   type: InputComponentTypes.Checkbox,
   props: {
     model,
     label
-  }
-})
+  },
+  slots
+});
 
-export const Select = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
+export const createSelect = (type: InputComponentTypes, modelName: string, config?: ComponentConfig): InputComponentConfig => {
   return {
-    type: InputComponentTypes.Select,
+    type,
     props: {
+      ...config?.props,
       model: modelName,
-      label,
-      placeholder,
       filled: true,
       'use-input': true,
       class: 'full-width',
-      ...props
+      label: config?.label,
+      placeholder: config?.placeholder,
     },
     events: (_this: any) => ({
       filter: (val: any, update: any) => {
         update(() => {
           _this.vData.options = val.trim().length
             ? filterTextItemsByText(_this.vData.options, val)
-            : props.options
-        })
-      }
-    })
-  }
-}
-
-export const ColorSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
-  return Select(modelName, label, placeholder, {
-    ...props,
-    options: COLOR_VARIANTS
-  })
-}
-
-export const InputTypesSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
-  return Select(modelName, label, placeholder, {
-    options: INPUT_TYPES,
-    ...props
-  })
-}
-
-export const IconsSelector = (modelName: string, label: string, placeholder: string = '', props?: any): InputComponentConfig => {
-  return Select(modelName, label, placeholder, {
-    options: iconsSource,
-    virtualScrollSliceSize: 25,
-    useInput: true,
-    events: (_this: any) => ({
-      filter: (val: any, update: any) => {
-        update(() => {
-          _this.vData.options = val.trim().length
-            ? filterTextItemsByText(_this.vData.options, val)
-            : props.options
-        })
+            : config?.props?.options || [];
+        });
       }
     }),
-    ...props
-  })
-}
+    slots: config?.slots
+  };
+};
+
+export const Select = (modelName: string, config?: ComponentConfig): InputComponentConfig => {
+  return createSelect(InputComponentTypes.Select, modelName, config);
+};
+
+export const ColorSelector = (modelName: string, config?: ComponentConfig): InputComponentConfig => {
+  return createSelect(InputComponentTypes.Select, modelName, {
+    label: config?.label,
+    placeholder: config?.placeholder,
+    props: {
+      ...config?.props || {},
+      options: COLOR_VARIANTS,
+    },
+    slots: config?.slots
+  });
+};
+
+export const InputTypesSelector = (modelName: string, config?: ComponentConfig): InputComponentConfig => {
+  return createSelect(InputComponentTypes.Select, modelName, {
+    label: config?.label,
+    placeholder: config?.placeholder,
+    props: {
+      ...config?.props,
+      options: INPUT_TYPES,
+    },
+    slots: config?.slots
+  });
+};
+
+export const IconsSelector = (modelName: string, config?: { label?: string, placeholder?: string, props?: any, slots?: Slots }): InputComponentConfig => {
+  return createSelect(InputComponentTypes.Select, modelName, {
+    label: config?.label,
+    placeholder: config?.placeholder,
+    props: {
+      options: ICONS_SOURCE,
+      virtualScrollSliceSize: VIRTUAL_SCROLL_SIZE,
+      useInput: true,
+      events: (_this: any) => ({
+        filter: (val: any, update: any) => {
+          update(() => {
+            _this.vData.options = val.trim().length
+              ? filterTextItemsByText(_this.vData.options, val)
+              : config?.props.options || {};
+          });
+        }
+      }),
+      ...config?.props || {}
+    },
+    slots: config?.slots
+  });
+};

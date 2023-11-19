@@ -18,21 +18,24 @@ type ComponentFactory = (
 ) => Component;
 export const componentByType = (
   type: ComponentTypes,
+  params?: {
+    props?: Props,
+    children?: Children,
+    parent?: Children
+  }
+) => ({
+  type,
+  ...params
+})
+
+// TODO як окремі аргументи передавати тільки обов'язкові поля, а всі інші поля передавати об'єктом
+export const componentFactory = (
+  type: ComponentTypes
+) => (params?: {
   props?: Props,
   children?: Children,
   parent?: Children
-) => ({
-  type,
-  props: props || {},
-  children: children || [],
-  parent: parent || []
-})
-
-export const componentFactory = (
-  type: ComponentTypes
-) => (props?: Props,
-      children?: Children,
-      parent?: Children) => componentByType(type, props, children, parent)
+}) => componentByType(type, params)
 
 const getClassWithDefault = (defaultClass: string, props: Props): Props => ({
   ...props,
@@ -58,10 +61,11 @@ export const getDivFactory = componentByTypeCurry('div') as ComponentFactory;
 
 export const Div = componentFactory('div')
 
-export const Row = (props = {} as Props, children: Children, parent?: Parent) => Div(
-  { ...getClassWithDefault('row', props || {}) },
-  children,
-  parent
+export const Row = (props = {} as Props, children: Children, params?: {parent?: Parent}) => Div(
+  { ...getClassWithDefault('row', props || {}),
+    children,
+    parent },
+
 )
 
 export const Col = (props = {} as Props, children: Children, col?: string | number, parent?: Parent) => getDivFactory(
