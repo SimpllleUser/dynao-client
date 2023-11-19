@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang='ts'>
-import { Ref, ref } from 'vue'
+import { Ref, ref, watch } from 'vue'
 import { useToggle } from '@vueuse/core'
 import { Vue3JsonEditor } from 'vue3-json-editor'
 import { Nullable } from 'boot/types'
@@ -62,5 +62,9 @@ const activeTypeComponent: Ref<Nullable<any>> = ref(null)
 const setActiveTypeComponent = (type: string) => {
   activeTypeComponent.value = type
 }
+
+watch( () => inputConfigurator, () => {
+  console.log(propsConfiguratorInput)
+}, { deep: true })
 
 </script>
