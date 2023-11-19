@@ -53,11 +53,12 @@ export type Props = any
 
 export interface UIElementByJson {
   id?: string
-  type: ComponentTypes
+  type?: ComponentTypes
   parent?: UIElementByJson
   children?: UIElementByJson
   events?: object,
   props?: Props,
+  body?: any,
 }
 
 export type Children = Array<UIElementByJson>

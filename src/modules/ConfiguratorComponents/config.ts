@@ -1,4 +1,4 @@
-import { Col, Row } from 'src/modules/UIParser/helpers/ui-factories'
+import { Col, Div, Row } from 'src/modules/UIParser/helpers/ui-factories'
 import { InputComponentTypes } from 'src/modules/UIParser/types'
 import {
     Input,
@@ -10,6 +10,10 @@ import {
 } from 'src/modules/ConfiguratorComponents/form-element'
 
 export const propsConfiguratorInput = [
+    Div({
+        props: { class: 'bg-primary q-pa-lg text-secondary' },
+        body: 'Text body in div',
+    }),
     Row({ class: 'w-full' }, [
         InputTypesSelector('type', {
             label: 'Type',
@@ -34,7 +38,7 @@ export const propsConfiguratorInput = [
     ]),
     Row({ class: 'w-full q-mt-sm' }, [
         ColorSelector('color', { label: 'Color' }),
-        ColorSelector('bg-color', { label: 'Background color',  }),
+        ColorSelector('bg-color', { label: 'Background color' }),
     ]),
     Row({ class: 'w-full q-mt-sm' }, [
         Checkbox('outline', 'Outline'),

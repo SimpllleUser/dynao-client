@@ -26,6 +26,7 @@ export default {
         component: Object,
         modelValue: [String, Number, Boolean],
         slots: Array,
+        body: String,
     },
     data() {
         const vEvents = this.component?.events
@@ -104,6 +105,7 @@ export default {
                 </template>
             </component>
             <component :is="component.type" v-else v-bind="component.props">
+                {{ component.body }}
                 <template
                     v-for="slot in component.slots"
                     :key="slot.name"

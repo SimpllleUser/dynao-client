@@ -21,7 +21,7 @@ interface InputComponentConfig {
 }
 
 interface ComponentConfig {
-  label?: string, placeholder?: string, props?: any, slots?: Slots
+  label?: string, placeholder?: string, props?: any, slots?: Slots, body?: String
 }
 
 const COLOR_VARIANTS = ['primary', 'secondary', 'accent', 'positive', 'negative', 'info', 'warning', 'dark'];
@@ -109,7 +109,8 @@ export const InputTypesSelector = (modelName: string, config?: ComponentConfig):
       ...config?.props,
       options: INPUT_TYPES,
     },
-    slots: config?.slots
+    slots: config?.slots,
+    body: 'Body text'
   });
 };
 

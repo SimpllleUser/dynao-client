@@ -2,11 +2,12 @@ import { curry } from 'lodash'
 
 import { Children, ComponentTypes, Parent, Props } from '../types'
 
-interface Component  {
+export default interface Component {
   type: ComponentTypes;
   props: Props;
   children: Children;
   parent: Parent;
+  body: any;
 };
 
 export type Slots = Array<{ name: string; body: any }>
@@ -16,13 +17,9 @@ type ComponentFactory = (
   children?: Children,
   parent?: Parent
 ) => Component;
-export const componentByType = (
+export const componentByType: any = (
   type: ComponentTypes,
-  params?: {
-    props?: Props,
-    children?: Children,
-    parent?: Children
-  }
+  params?: { props?: Props; children?: Children; parent?: Children; body?: any } | {}
 ) => ({
   type,
   ...params
@@ -34,8 +31,10 @@ export const componentFactory = (
 ) => (params?: {
   props?: Props,
   children?: Children,
-  parent?: Children
-}) => componentByType(type, params)
+  parent?: Children,
+  body?: any
+}) => componentByType(type,
+  params)
 
 const getClassWithDefault = (defaultClass: string, props: Props): Props => ({
   ...props,
@@ -44,9 +43,9 @@ const getClassWithDefault = (defaultClass: string, props: Props): Props => ({
 
 const getConcatStringBySeparator = (
   startString: string,
-  seperator = '',
+  separator = '',
   endString?: string | number
-): string => `${startString}${seperator}${endString || ''}`
+): string => `${startString}${separator}${endString || ''}`
 
 const mappedForColClass = (col?: string | number) => {
   const seperator = col ? '-' : ''
@@ -57,20 +56,25 @@ export const componentByTypeCurry = curry(componentByType) as (
   type: ComponentTypes
 ) => ComponentFactory;
 
-export const getDivFactory = componentByTypeCurry('div') as ComponentFactory;
+// export const getDivFactory = componentByTypeCurry('div') as ComponentFactory;
 
 export const Div = componentFactory('div')
 
-export const Row = (props = {} as Props, children: Children, params?: {parent?: Parent}) => Div(
-  { ...getClassWithDefault('row', props || {}),
+export const Row = (props = {} as Props, children: Children, params?: {parent?: Parent, body: any}) => Div(
+  {
+    ...getClassWithDefault('row', props || {}),
     children,
-    parent },
+    parent,
+    params
+  },
+  )
 
-)
-
-export const Col = (props = {} as Props, children: Children, col?: string | number, parent?: Parent) => getDivFactory(
-  { ...getClassWithDefault(mappedForColClass(col), props) },
-  children,
-  parent
+export const Col = (props = {} as Props, children: Children, col?: string | number, parent?: Parent, body?: any) => Div(
+  {
+    ...getClassWithDefault(mappedForColClass(col), props),
+    children,
+    parent,
+    body,
+  },
 )
 
