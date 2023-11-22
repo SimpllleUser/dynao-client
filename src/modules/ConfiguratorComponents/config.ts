@@ -1,4 +1,14 @@
-import { Col, Div, Row } from 'src/modules/UIParser/helpers/ui-factories'
+import {
+    Button,
+    Card,
+    CardSection,
+    Col,
+    Div,
+    ItemSection,
+    List,
+    ListItem,
+    Row,
+} from 'src/modules/UIParser/helpers/ui-factories'
 import { InputComponentTypes } from 'src/modules/UIParser/types'
 import {
     Input,
@@ -75,4 +85,53 @@ export const propsConfiguratorButton = [
         Checkbox('round', 'Round'),
     ]),
     Row({}, [Checkbox('square', 'Square'), Checkbox('no-caps', 'No-caps')]),
+]
+
+const items: any = [];
+
+const addItem = () => {
+  items.push(ListItem({
+    body: 'Todo task [' + Date.now() + ']' ,
+  }))
+
+  console.log(items)
+}
+
+export const propsConfiguratorTodo = [
+    Card({
+        props: { dark: true },
+        children: [
+            CardSection({
+                children: [
+                    Row({ class: 'w-full q-mb-sm d-flex' }, [
+                        Input('label', {
+                            label: 'Todo',
+                            placeholder: 'Input waht you want todo',
+                        }),
+                        /// Можна додати обробку Event
+                        /// Виділити в окрему змінну список елементів та з нею виконувати операції
+                        // Додати рективності до конфігурацї чи до елементів hildren, body, parant і т д
+                        // Спробувати надати реактивності самій конфігурацї (може воно всеодно не буде відпрацовувати)
+                        // Пділаштувати нові методи фабрики піл старий форматЮ чи навпаки
+                        // Виділити елементи логіки в коремі методи (UiParserNested)
+                        Button({ body: 'Add' }),
+                    ]),
+                    List({
+                        children: [
+                            ListItem({
+                                body: 'Todo task 1',
+                            }),
+                            ListItem({
+                                body: 'Todo task 2',
+                            }),
+                            ListItem({
+                                body: 'Todo task 3',
+                            }),
+                          ...items,
+                        ],
+                    }),
+                ],
+            }),
+        ],
+    }),
 ]

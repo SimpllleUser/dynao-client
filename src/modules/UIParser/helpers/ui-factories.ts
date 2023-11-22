@@ -78,3 +78,17 @@ export const Col = (props = {} as Props, children: Children, col?: string | numb
   },
 )
 
+interface FactoryParams { props?: Props, children?: Children, parent?: Parent, body?: any }
+export const generateComponentByGeneralFactory = (type: string) => (params: FactoryParams) => componentByType(type,
+  {
+    children: params.children,
+    parent,
+    params
+  },
+)
+export const Card = generateComponentByGeneralFactory('q-card')
+export const CardSection = generateComponentByGeneralFactory('q-card-section')
+export const List = generateComponentByGeneralFactory('q-list')
+export const ListItem = generateComponentByGeneralFactory('q-item')
+export const ItemSection = generateComponentByGeneralFactory('q-item-section')
+export const Button = generateComponentByGeneralFactory('q-btn')

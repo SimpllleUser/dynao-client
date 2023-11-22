@@ -1,5 +1,5 @@
 <script>
-// <!-- 'q-input' 'q-btn' 'q-select' 'q-checkbox' 'q-radio' 'color-selector' 'icon-selector'-->
+// <!-- 'q-input' 'q-btn' 'q-select' 'q-item' 'q-checkbox' 'q-radio' 'color-selector' 'icon-selector' 'q-card'  'q-card-section 'q-list' 'q-item' 'q-item-section'-->
 import { get } from 'lodash'
 
 import {
@@ -105,7 +105,7 @@ export default {
                 </template>
             </component>
             <component :is="component.type" v-else v-bind="component.props">
-                {{ component.body }}
+                {{ component.body || component.params.body }}
                 <template
                     v-for="slot in component.slots"
                     :key="slot.name"
